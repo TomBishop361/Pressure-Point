@@ -58,7 +58,7 @@ namespace StarterAssets
 					{
 						Debug.Log("Valve HIT");
 						InteractedObj = hit.transform.gameObject;
-						playerState = 1;//valve state
+                        playerState = 1;//valve state
 						StartCoroutine(LerpToInteract());
 					}
 				}
@@ -123,6 +123,7 @@ namespace StarterAssets
             return (startValue + (endValue - startValue) * t);
         }
 
+		//lerp subrotine 
 		IEnumerator LerpToInteract()
 		{
 			lerping = true;
@@ -133,7 +134,6 @@ namespace StarterAssets
 				perc = Easing.Linear(time);
 				lerpX = lerp(transform.position.x, InteractedObj.GetComponent<ValveScript>().interactPos.x,perc);
 				lerpZ = lerp(transform.position.z, InteractedObj.GetComponent<ValveScript>().interactPos.y, perc);
-                lerpRotationy = lerp(transform.rotation.y, _lookRotation.y, perc);
                 time += Time.deltaTime;
 				yield return null;
 			}
@@ -145,17 +145,17 @@ namespace StarterAssets
         {
 			if (InteractedObj != null)
 			{
-				_direction = (InteractedObj.transform.position - transform.position).normalized;
+                _direction = (InteractedObj.transform.position - transform.position);
+                _lookRotation = Quaternion.LookRotation(_direction);
+            }
 
-				//create the rotation we need to be in to look at the target
-				_lookRotation = Quaternion.LookRotation(_direction);
+			if (lerping) {
+                //moves player to correct position to interact
+                _lookRotation.x = transform.rotation.x; _lookRotation.z = transform.rotation.z; //Changes values so Y is the only axis that rotates
+                transform.rotation = Quaternion.Slerp(transform.rotation, _lookRotation, 20);  
+                transform.position = new Vector3(lerpX, transform.position.y, lerpZ);
 			}
 
-			if (lerping) { 
-				//moves player to correct position to interact
-				transform.eulerAngles = new Vector3(transform.rotation.y, lerpRotationy, transform.rotation.z); //transforms the rotation of the camera        
-				transform.position = new Vector3(lerpX, transform.position.y, lerpZ);
-			}
         }
 
 
