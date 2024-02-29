@@ -206,6 +206,7 @@ namespace StarterAssets
 					if (_input.move != Vector2.zero)
 					{
 						_input.InteractedObj.GetComponent<ValveScript>().rotate(_input.move);
+						
 					}
 					break;
 			}

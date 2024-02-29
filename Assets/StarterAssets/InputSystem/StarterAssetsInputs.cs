@@ -32,6 +32,8 @@ namespace StarterAssets
 		float lerpX;
 		float lerpZ;
 		bool lerping;
+		GameObject HeldObject;
+		bool isHeldObject;
 
         public void OnMove(InputValue value)
 		{
@@ -58,10 +60,22 @@ namespace StarterAssets
 					{
 						Debug.Log("Valve HIT");
 						InteractedObj = hit.transform.gameObject;
-                        playerState = 1;//valve state
+						playerState = 1;//valve state
 						StartCoroutine(LerpToInteract());
 					}
-				}
+					if (hit.transform.CompareTag("PickUp"))
+					{
+						Debug.Log("Hit");
+						if (isHeldObject == false)
+						{
+							isHeldObject = true;
+							hit.transform.SetParent(Camera.main.transform, false);
+							hit.transform.localPosition = new Vector3(0.435f, -0.5f, 0.741f);
+							//hit.transform.transform.localEulerAngles = new Vector3(0, 0, 0);
+							HeldObject = hit.transform.gameObject;
+						}
+					}
+				} 
 			}
 			else
 			{
@@ -69,7 +83,27 @@ namespace StarterAssets
 			}
 		}
 
-		public void OnLook(InputValue value)
+        void OnDrop()
+        {
+            if (isHeldObject == true)
+            {
+                HeldObject.transform.parent = null;
+				if(HeldObject.transform.name == "Screwdriver")
+				{
+                    HeldObject.transform.position = new Vector3(-24.311f, 9.123f, -24.76f);
+                    HeldObject.transform.localEulerAngles = new Vector3(90, 90, 0);
+				}
+				else
+				{
+                    HeldObject.transform.position = new Vector3(-20.306f, 7.5f, -27.129f);
+                    HeldObject.transform.localEulerAngles = new Vector3(0, 0, 0);
+                } 
+                isHeldObject = false;
+            }
+        }
+
+
+        public void OnLook(InputValue value)
 		{
 			switch (playerState)
 			{
