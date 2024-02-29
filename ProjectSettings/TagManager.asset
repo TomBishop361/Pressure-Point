@@ -6,6 +6,8 @@ TagManager:
   tags:
   - CinemachineTarget
   - Valve
+  - PickUp
+  - Screw
   layers:
   - Default
   - TransparentFX

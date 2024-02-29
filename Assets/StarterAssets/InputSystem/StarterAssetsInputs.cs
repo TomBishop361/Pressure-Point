@@ -54,8 +54,8 @@ namespace StarterAssets
 				// to see if it is about to hit anything.
 				if (Physics.SphereCast(p1, 0.08f, Camera.main.transform.forward, out hit, 2.0f))
 				{
-					distanceToObstacle = hit.distance;
-					Debug.Log(distanceToObstacle);
+					
+					Debug.Log(hit.transform.name);
 					if (hit.transform.CompareTag("Valve"))
 					{
 						Debug.Log("Valve HIT");
@@ -71,11 +71,17 @@ namespace StarterAssets
 							isHeldObject = true;
 							hit.transform.SetParent(Camera.main.transform, false);
 							hit.transform.localPosition = new Vector3(0.435f, -0.5f, 0.741f);
-							//hit.transform.transform.localEulerAngles = new Vector3(0, 0, 0);
+							hit.transform.transform.localEulerAngles = new Vector3(0, 0, 0);
 							HeldObject = hit.transform.gameObject;
 						}
 					}
-				} 
+					if (hit.transform.CompareTag("Screw")) {
+						if (HeldObject != null && HeldObject.transform.name == "Screwdriver")
+						{
+							hit.transform.GetComponent<Screw>().UnScrew();
+						}
+					}
+                } 
 			}
 			else
 			{
@@ -152,10 +158,7 @@ namespace StarterAssets
 			
 		}
 
-        public static float lerp(float startValue, float endValue, float t)
-        {
-            return (startValue + (endValue - startValue) * t);
-        }
+        
 
 		//lerp subrotine 
 		IEnumerator LerpToInteract()
@@ -166,8 +169,8 @@ namespace StarterAssets
 			{
 				float perc = 0;
 				perc = Easing.Linear(time);
-				lerpX = lerp(transform.position.x, InteractedObj.GetComponent<ValveScript>().interactPos.x,perc);
-				lerpZ = lerp(transform.position.z, InteractedObj.GetComponent<ValveScript>().interactPos.y, perc);
+				lerpX = LerpScript.lerp(transform.position.x, InteractedObj.GetComponent<ValveScript>().interactPos.x,perc);
+				lerpZ = LerpScript.lerp(transform.position.z, InteractedObj.GetComponent<ValveScript>().interactPos.y, perc);
                 time += Time.deltaTime;
 				yield return null;
 			}

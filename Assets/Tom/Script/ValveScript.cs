@@ -28,6 +28,7 @@ public class ValveScript : MonoBehaviour
 
     private void Start()
     {
+        breakValve();
         StatInputs = player.GetComponent<StarterAssetsInputs>();
     }
 
