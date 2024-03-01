@@ -6,6 +6,7 @@ using UnityEngine;
 public class Manager : MonoBehaviour
 {
     [Header("Object References")]
+    [SerializeField] WaterRise water;
     [SerializeField] TextMeshPro DepthCounter;
     [Header("Misc")]
     public int BrokenCount;
@@ -43,6 +44,7 @@ public class Manager : MonoBehaviour
     void Update()
     {
         depthCalc();
+        water.riseCalc(BrokenCount);
         //transform.position += Vector3.up * 0.1f * Time.deltaTime;
     }
 }

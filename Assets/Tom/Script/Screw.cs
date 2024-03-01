@@ -17,18 +17,26 @@ public class Screw : MonoBehaviour
 
     public void UnScrew()
     {
-        if (!isUnscrewed)
-        {            
-            StartCoroutine(UnScrewLerp());
+        if (FBox.doorISOpen == false)
+        {
+            if (!isUnscrewed)
+            {
+                if (FBox.isBroken)
+                {
+                    StartCoroutine(UnScrewLerp());
+                }
+            }
+            else
+            {
+                StartCoroutine(ScrewLerp());
+            }
         }
-        else
-        {            
-            StartCoroutine(ScrewLerp());
-        }
+        
     }
 
     IEnumerator UnScrewLerp()
-    {
+    {       
+        
         lerping = true;
         float time = 0;
         while (time < 1f)
@@ -42,10 +50,13 @@ public class Screw : MonoBehaviour
         }
         lerping = false;
         FBox.screwCount(1);
+        isUnscrewed = true;
     }
 
     IEnumerator ScrewLerp()
     {
+        FBox.screwCount(-1);
+        isUnscrewed = false;
         lerping = true;
         float time = 0;
         while (time < 1f)
@@ -53,12 +64,13 @@ public class Screw : MonoBehaviour
             float perc = 0;
             perc = Easing.Linear(time);
             Rotz = LerpScript.lerp(180, 0, perc);
-            Posx = LerpScript.lerp(transform.position.x, transform.position.x+0.001f, perc);
+            Posx = LerpScript.lerp(transform.position.x, transform.position.x - 0.001f, perc);
             time += Time.deltaTime;
             yield return null;
         }
         lerping = false;
-        FBox.screwCount(-1);
+        
+
     }
 
     // Update is called once per frame

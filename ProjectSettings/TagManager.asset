@@ -8,6 +8,7 @@ TagManager:
   - Valve
   - PickUp
   - Screw
+  - Switch
   layers:
   - Default
   - TransparentFX

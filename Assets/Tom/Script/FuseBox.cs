@@ -7,7 +7,13 @@ using UnityEngine.UIElements.Experimental;
 
 public class FuseBox : MonoBehaviour
 {
-    bool lerping;
+    [SerializeField] Manager manager;
+    [SerializeField] GameObject alertLight;
+    [SerializeField] Material[] mats;
+    public bool doorISOpen;
+    public bool isBroken;
+    public int switchCount;
+    public bool lerping;
     float Roty;
     int sCount;
     [SerializeField] GameObject hinge;
@@ -16,13 +22,18 @@ public class FuseBox : MonoBehaviour
         sCount += num;
         if(sCount == 4)
         {
-            //hinge.transform.rotation = Quaternion.Slerp(hinge.transform.rotation, Quaternion.Euler(-90, 145, 180), 1f);
             StartCoroutine(OpenLerp());
+        }
+        if (isBroken == false && sCount == 0)
+        {
+            alertLight.GetComponent<Renderer>().material = mats[1];
+            manager.BrokenCount--;
         }
     }
 
     IEnumerator OpenLerp()
     {
+        doorISOpen = true;
         lerping = true;
         float time = 0;
         while (time < 1f)
@@ -36,12 +47,37 @@ public class FuseBox : MonoBehaviour
         lerping = false;        
     }
 
+    IEnumerator CloseLerp()
+    {
+        lerping = true;
+        float time = 0;
+        while (time < 1f)
+        {
+            float perc = 0;
+            perc = Easing.Linear(time);
+            Roty = LerpScript.lerp(145, 0, perc);
+            time += Time.deltaTime;
+            yield return null;
+        }
+        lerping = false;
+        doorISOpen=false;
+    }
+
+
+    public void BreakFuses()
+    {
+        isBroken = true;
+        manager.BrokenCount++;
+        alertLight.GetComponent<Renderer>().material = mats[0];
+        BroadcastMessage("breakSwitch");
+    }
+
 
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        BreakFuses();
         //hinge.transform.eulerAngles = new Vector3 (-90, 145, 180);
     }
 
@@ -52,5 +88,13 @@ public class FuseBox : MonoBehaviour
         {
             hinge.transform.localEulerAngles = new Vector3(-90, Roty, 180);
         }
+
+        if (switchCount >= 3)
+        {
+            isBroken = false; switchCount = 0;
+            StartCoroutine(CloseLerp());
+        }
+        
+
     }
 }

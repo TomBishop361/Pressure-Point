@@ -48,7 +48,6 @@ namespace StarterAssets
 				RaycastHit hit;
 
 				Vector3 p1 = Camera.main.transform.position;
-				float distanceToObstacle = 0;
 
 				// Cast a sphere wrapping character controller 10 meters forward
 				// to see if it is about to hit anything.
@@ -80,6 +79,10 @@ namespace StarterAssets
 						{
 							hit.transform.GetComponent<Screw>().UnScrew();
 						}
+					}
+					if (hit.transform.CompareTag("Switch"))
+					{
+						hit.transform.GetComponent<Switch>().flip();
 					}
                 } 
 			}

@@ -6,9 +6,9 @@ public class WaterRise : MonoBehaviour
 {
     public float Speed;
 
-    void riseCalc(int brokenCount)
+    public void riseCalc(int brokenCount)
     {
-        Speed = brokenCount * 0.1f;
+        Speed = brokenCount * 0.01f;
     }
 
     private void Update()
