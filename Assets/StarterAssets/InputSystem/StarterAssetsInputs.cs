@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 #if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
@@ -10,6 +11,8 @@ namespace StarterAssets
 {
 	public class StarterAssetsInputs : MonoBehaviour
 	{
+		[SerializeField] GameObject cam;
+
 		[Header("Character Input Values")]
 		public Vector2 move;
 		public Vector2 look;
@@ -38,7 +41,7 @@ namespace StarterAssets
         public void OnMove(InputValue value)
 		{
             MoveInput(value.Get<Vector2>());
-			Debug.Log(move);
+
 		}
 
 		public void OnInteract()
@@ -55,6 +58,17 @@ namespace StarterAssets
 				{
 					
 					Debug.Log(hit.transform.name);
+					if(hit.transform != null)
+					{
+						Debug.Log("hit");
+					}
+					if (hit.transform.CompareTag("PC"))
+					{
+						Debug.Log("PC Hit");
+						InteractedObj = hit.transform.gameObject;
+						playerState = 2; //PC State
+                        StartCoroutine(LerpToInteract());
+                    }
 					if (hit.transform.CompareTag("Valve"))
 					{
 						Debug.Log("Valve HIT");
@@ -86,7 +100,7 @@ namespace StarterAssets
 					}
                 } 
 			}
-			else
+			else if(playerState == 1) 
 			{
 				playerState = 0;
 			}
@@ -126,8 +140,14 @@ namespace StarterAssets
 					look = new Vector2 (0,0);
 					
 					break;
+				case 2://PC
+                    if (cursorInputForLook)
+                    {
+                        LookInput(value.Get<Vector2>());
+                    }
+                    break;
 
-			}
+            }
 			
 		}
 
@@ -172,19 +192,20 @@ namespace StarterAssets
 			{
 				float perc = 0;
 				perc = Easing.Linear(time);
-				lerpX = LerpScript.lerp(transform.position.x, InteractedObj.GetComponent<ValveScript>().interactPos.x,perc);
-				lerpZ = LerpScript.lerp(transform.position.z, InteractedObj.GetComponent<ValveScript>().interactPos.y, perc);
+				lerpX = LerpScript.lerp(transform.position.x, InteractedObj.GetComponent<PosData>().interactPos.x,perc);
+				lerpZ = LerpScript.lerp(transform.position.z, InteractedObj.GetComponent<PosData>().interactPos.y, perc);
                 time += Time.deltaTime;
 				yield return null;
 			}
-			lerping= false;
+			lerping= false;			
 		}
 
 
         private void Update()
         {
+			//calculates roation of interacted object
 			if (InteractedObj != null)
-			{
+			{				
                 _direction = (InteractedObj.transform.position - transform.position);
                 _lookRotation = Quaternion.LookRotation(_direction);
             }
@@ -222,6 +243,7 @@ namespace StarterAssets
 		
 		private void OnApplicationFocus(bool hasFocus)
 		{
+			//Change so this only happens when player is NOT in terminal state
 			SetCursorState(cursorLocked);
 		}
 

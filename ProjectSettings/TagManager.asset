@@ -9,6 +9,8 @@ TagManager:
   - PickUp
   - Screw
   - Switch
+  - Terminal
+  - PC
   layers:
   - Default
   - TransparentFX
