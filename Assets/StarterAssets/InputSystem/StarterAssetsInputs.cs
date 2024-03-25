@@ -68,6 +68,7 @@ namespace StarterAssets
 						InteractedObj = hit.transform.gameObject;
 						playerState = 2; //PC State
                         StartCoroutine(LerpToInteract());
+						hit.transform.GetComponent<TerminalManager>().inputField.ActivateInputField();
                     }
 					if (hit.transform.CompareTag("Valve"))
 					{

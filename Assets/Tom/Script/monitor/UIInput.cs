@@ -18,12 +18,7 @@ public class UIInput : MonoBehaviour
         Raycaster = GetComponent<GraphicRaycaster>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
+  
     public void OnCursorInput(Vector2 normalisedPosition)
     {
         // calculate the position in canvas space
@@ -93,12 +88,12 @@ public class UIInput : MonoBehaviour
                 }
             }
 
-            // send a mouse down event?
+            // send a mouse down event
             if (sendMouseDown)
             {
                 if (ExecuteEvents.Execute(result.gameObject, eventData, ExecuteEvents.pointerDownHandler))
                     break;
-            } // send a mouse up event?
+            } // send a mouse up event
             else if (sendMouseUp)
             {
                 bool didRun = ExecuteEvents.Execute(result.gameObject, eventData, ExecuteEvents.pointerUpHandler);

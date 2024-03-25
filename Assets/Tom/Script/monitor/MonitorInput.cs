@@ -26,7 +26,7 @@ public class MonitorInput : MonoBehaviour
             if (hit.transform != null)
             {
                 if (hit.transform.CompareTag("Terminal")) {
-                    Debug.Log(hit.textureCoord);
+                    //Debug.Log(hit.textureCoord);
                     OnCursorInput.Invoke(hit.textureCoord);
                 }
                 
