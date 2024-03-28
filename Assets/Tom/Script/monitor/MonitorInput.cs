@@ -18,6 +18,7 @@ public class MonitorInput : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Raycats on UI layer and sends texture coords to script to calculate interations
         Ray mouseRay =  Camera.main.ScreenPointToRay(Input.mousePosition);
 
         RaycastHit hit;
@@ -26,7 +27,6 @@ public class MonitorInput : MonoBehaviour
             if (hit.transform != null)
             {
                 if (hit.transform.CompareTag("Terminal")) {
-                    //Debug.Log(hit.textureCoord);
                     OnCursorInput.Invoke(hit.textureCoord);
                 }
                 

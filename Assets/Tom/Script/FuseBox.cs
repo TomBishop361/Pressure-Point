@@ -17,20 +17,24 @@ public class FuseBox : MonoBehaviour
     float Roty;
     int sCount;
     [SerializeField] GameObject hinge;
+
+    
     public void screwCount(int num)
     {
-        sCount += num;
-        if(sCount == 4)
+        //counts number of unscrewed screws
+        sCount += num; 
+        if(sCount == 4) //If 4 (all) are unscrewed then open
         {
             StartCoroutine(OpenLerp());
         }
-        if (isBroken == false && sCount == 0)
+        if (isBroken == false && sCount == 0) //if is not broken && all screws are screwed
         {
-            alertLight.GetComponent<Renderer>().material = mats[1];
+            alertLight.GetComponent<Renderer>().material = mats[1]; // green material (Fixed)
             manager.BrokenCount--;
         }
     }
 
+    //Lerp to open door
     IEnumerator OpenLerp()
     {
         doorISOpen = true;
@@ -47,6 +51,7 @@ public class FuseBox : MonoBehaviour
         lerping = false;        
     }
 
+    //lerp to close door
     IEnumerator CloseLerp()
     {
         lerping = true;
@@ -63,13 +68,13 @@ public class FuseBox : MonoBehaviour
         doorISOpen=false;
     }
 
-
+    //Sets Fuse box to Broken state
     public void BreakFuses()
     {
         isBroken = true;
         manager.BrokenCount++;
         alertLight.GetComponent<Renderer>().material = mats[0];
-        BroadcastMessage("breakSwitch");
+        BroadcastMessage("breakSwitch");//Calls event in all switches to go to broken state
     }
 
 
@@ -77,8 +82,8 @@ public class FuseBox : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        BreakFuses();
-        //hinge.transform.eulerAngles = new Vector3 (-90, 145, 180);
+        BreakFuses(); //Remove later
+        
     }
 
     // Update is called once per frame

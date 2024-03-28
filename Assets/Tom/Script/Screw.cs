@@ -17,6 +17,7 @@ public class Screw : MonoBehaviour
 
     public void UnScrew()
     {
+        //Checks if interating should Screw or unscrew depending on Fbox Broken state & screw state
         if (FBox.doorISOpen == false)
         {
             if (!isUnscrewed)
@@ -34,6 +35,7 @@ public class Screw : MonoBehaviour
         
     }
 
+    //lerps screw to mimic an unscrewing motion
     IEnumerator UnScrewLerp()
     {       
         
@@ -53,6 +55,7 @@ public class Screw : MonoBehaviour
         isUnscrewed = true;
     }
 
+    //lerps screw to mimic screwing 
     IEnumerator ScrewLerp()
     {
         FBox.screwCount(-1);
@@ -76,6 +79,7 @@ public class Screw : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //While lerping is true update position adn local euler angles
         if (lerping)
         {
             transform.position = new Vector3 (Posx, transform.position.y, transform.position.z);

@@ -2972,6 +2972,8 @@ MonoBehaviour:
     type: 3}
   inputField: {fileID: 1786395254}
   content: {fileID: 1116556194}
+  scrollbar: {fileID: 1330348583}
+  scrollRect: {fileID: 1996455204}
 --- !u!23 &518539079
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -19438,6 +19440,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1330348583 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1191479181981335369, guid: c5cea31539e043d44b3d8825e6eddd28,
+    type: 3}
+  m_PrefabInstance: {fileID: 1612869451}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a4db7a114972834c8e4117be1d82ba3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1333726056
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19559,6 +19573,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1572166844}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e8a429f9168c29c47b706e4e84beb91f,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1572166846}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e8a429f9168c29c47b706e4e84beb91f,
         type: 3}
       insertIndex: -1
@@ -21509,6 +21527,19 @@ MonoBehaviour:
   - {fileID: 2100000, guid: bf7dd99350aeb924b88a0801920af6bc, type: 2}
   interactPos: {x: -20.4, y: -22.966}
   progress: 0
+--- !u!114 &1572166846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1572166842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b07df47ee0466d74cbc2078fdc7569b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactPos: {x: -20.4, y: -22.966}
 --- !u!1001 &1612869451
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21772,10 +21803,25 @@ PrefabInstance:
       propertyPath: m_OnEndEdit.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: TMPro.TMP_InputField, Unity.TextMeshPro
       objectReference: {fileID: 0}
+    - target: {fileID: 8902281548931173490, guid: c5cea31539e043d44b3d8825e6eddd28,
+        type: 3}
+      propertyPath: m_ChildForceExpandWidth
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8902281548931173490, guid: c5cea31539e043d44b3d8825e6eddd28,
+        type: 3}
+      propertyPath: m_ChildForceExpandHeight
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9078423069315903027, guid: c5cea31539e043d44b3d8825e6eddd28,
         type: 3}
       propertyPath: m_Horizontal
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9078423069315903027, guid: c5cea31539e043d44b3d8825e6eddd28,
+        type: 3}
+      propertyPath: m_MovementType
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9208341117121297576, guid: c5cea31539e043d44b3d8825e6eddd28,
         type: 3}
@@ -24219,6 +24265,18 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1985911532}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1996455204 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9078423069315903027, guid: c5cea31539e043d44b3d8825e6eddd28,
+    type: 3}
+  m_PrefabInstance: {fileID: 1612869451}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1aa08ab6e0800fa44ae55d278d1423e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &2031422167 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3291767801873964880, guid: 7d40b584cf328b44fae3ddcf67f77934,
