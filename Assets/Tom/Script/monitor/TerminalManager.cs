@@ -21,6 +21,7 @@ public class TerminalManager : MonoBehaviour
     //Hidden Variables
     bool isFullScreen;
     Vector2 screenRes;
+    int count;
 
 
     public void input(TMP_InputField input)
@@ -81,9 +82,8 @@ public class TerminalManager : MonoBehaviour
                 isFullScreen = true;
                 setRes();
                 break;
-            case "/oxygenreset":
-                SendMessage("FixOxygen", null, SendMessageOptions.DontRequireReceiver);
-                
+            case "/oxygenreset": //Begins the oxygen fixing process
+                InvokeRepeating("SendFixCount", 1.67f, 1.67f);
                 break;
 
 
@@ -99,6 +99,14 @@ public class TerminalManager : MonoBehaviour
         StartCoroutine(ScrollToBottom());
 
     }
+
+    //sends Count value to PCScript 
+    void SendFixCount()
+    {
+        count++;
+        SendMessage("FixCount", count, SendMessageOptions.DontRequireReceiver);
+    }
+
 
     //Sets the screen resolution
     void setRes()
