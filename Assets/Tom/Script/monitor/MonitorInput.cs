@@ -6,6 +6,7 @@ using UnityEngine.Rendering.Universal;
 
 public class MonitorInput : MonoBehaviour
 {
+    [Header("Raycast Variables")]
     [SerializeField] LayerMask LMask = ~0;
     [SerializeField] UnityEvent<Vector2> OnCursorInput = new UnityEvent<Vector2>();
     

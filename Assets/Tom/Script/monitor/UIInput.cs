@@ -7,9 +7,7 @@ using UnityEngine.UI;
 public class UIInput : MonoBehaviour
 {
     [SerializeField] RectTransform CanvasTransform;
-
     GraphicRaycaster Raycaster;
-
     List<GameObject> DragTargets = new List<GameObject>();
 
     // Start is called before the first frame update

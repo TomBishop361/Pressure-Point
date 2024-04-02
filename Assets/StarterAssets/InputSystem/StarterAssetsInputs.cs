@@ -44,6 +44,11 @@ namespace StarterAssets
 
 		}
 
+		public void setPlayerStateZero() //sets player back to state 0 (called by Terminal button)
+		{
+			playerState = 0;
+		}
+
 		public void OnInteract()
         {
 			if (playerState == 0)
@@ -56,12 +61,7 @@ namespace StarterAssets
 				// to see if it is about to hit anything.
 				if (Physics.SphereCast(p1, 0.08f, Camera.main.transform.forward, out hit, 2.0f))
 				{
-					
-					Debug.Log(hit.transform.name);
-					if(hit.transform != null)
-					{
-						Debug.Log("hit");
-					}
+					//Comparing hit object tag to check what action to perform					
 					if (hit.transform.CompareTag("PC"))
 					{
 						Debug.Log("PC Hit");
@@ -189,7 +189,7 @@ namespace StarterAssets
 		{
 			lerping = true;
 			float time = 0;
-			while (time < 1f)
+			while (time < 0.25f)
 			{
 				float perc = 0;
 				perc = Easing.Linear(time);

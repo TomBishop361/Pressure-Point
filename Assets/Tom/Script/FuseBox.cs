@@ -7,16 +7,20 @@ using UnityEngine.UIElements.Experimental;
 
 public class FuseBox : MonoBehaviour
 {
+    [Header("Object References")]
     [SerializeField] Manager manager;
     [SerializeField] GameObject alertLight;
+    [SerializeField] GameObject hinge;
+    [Header("Materials")]
     [SerializeField] Material[] mats;
+    [Header("Public Variables")]
     public bool doorISOpen;
     public bool isBroken;
     public int switchCount;
     public bool lerping;
     float Roty;
     int sCount;
-    [SerializeField] GameObject hinge;
+    
 
     
     public void screwCount(int num)
@@ -74,7 +78,7 @@ public class FuseBox : MonoBehaviour
         isBroken = true;
         manager.BrokenCount++;
         alertLight.GetComponent<Renderer>().material = mats[0];
-        BroadcastMessage("breakSwitch");//Calls event in all switches to go to broken state
+        BroadcastMessage("breakSwitch",null, SendMessageOptions.DontRequireReceiver);//Calls event in all switches to go to broken state
     }
 
 

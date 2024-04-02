@@ -8,18 +8,20 @@ using UnityEngine.UIElements;
 
 public class TerminalManager : MonoBehaviour
 {
+    //Visible Variables
+    [Header("UI Prefabs")]
     [SerializeField] GameObject UIInputPanel;
     [SerializeField] GameObject UITextResponse;
+    [Header("UI Components")]
     public TMP_InputField inputField;
     [SerializeField] GameObject content;
-    [SerializeField] Scrollbar scrollbar;
-    bool isFullScreen;
-
     [SerializeField] ScrollRect scrollRect;
-    //[SerializeField] RectTransform contentRect;
-    //[SerializeField] ScrollRect scrollRect;
-    //[SerializeField] Scroller scroller;
-    [SerializeField] ScrollView scrollView;
+    
+
+    //Hidden Variables
+    bool isFullScreen;
+    Vector2 screenRes;
+
 
     public void input(TMP_InputField input)
     {
@@ -30,6 +32,7 @@ public class TerminalManager : MonoBehaviour
         UIInputPanel.SetActive(false);
         switch (input.text.ToLower().Replace(" ", string.Empty))
         {
+            //Commands and their responses
             case "/help":
                 UIResponse = Instantiate(UITextResponse, content.transform, false);
                 UIResponse.GetComponent<TMP_Text>().text = "Here are a list of Commands:\r\nCheck Oxygen Level      /OxygenLevel\r\nReset Oxygen            /OxygenReset\r\nStart Mission           /Start\r\nMission Logs            /logs\r\nQuit Game               /Quit\r\nGame Settings           /settings";
@@ -53,19 +56,34 @@ public class TerminalManager : MonoBehaviour
                 UIResponse.GetComponent<TMP_Text>().text = "Master Volume Set To XXX%";
                 break;
             case "/resolution1920*1080":
-                Screen.SetResolution(1920, 1080, isFullScreen);
+                screenRes = new Vector2(1920, 1080);
+                setRes();
                 UIResponse = Instantiate(UITextResponse, content.transform, false);
                 UIResponse.GetComponent<TMP_Text>().text = "Screen Resolution Set!";
                 break;
             case "/resolution1280*720":
-                Screen.SetResolution(1280, 1080, isFullScreen);
+                screenRes = new Vector2(1280, 720);
+                setRes();
                 UIResponse = Instantiate(UITextResponse, content.transform, false);
                 UIResponse.GetComponent<TMP_Text>().text = "Screen Resolution Set!";
                 break;
             case "/resolution2560*1440":
-                Screen.SetResolution(2560, 1440, isFullScreen);
+                screenRes = new Vector2(2560, 1440);
+                setRes();
                 UIResponse = Instantiate(UITextResponse, content.transform, false);
                 UIResponse.GetComponent<TMP_Text>().text = "Screen Resolution Set!";
+                break;
+            case "/fullscreenfalse":
+                isFullScreen = false;
+                setRes();
+                break;
+            case "/fullscreentrue":
+                isFullScreen = true;
+                setRes();
+                break;
+            case "/oxygenreset":
+                SendMessage("FixOxygen", null, SendMessageOptions.DontRequireReceiver);
+                
                 break;
 
 
@@ -82,6 +100,13 @@ public class TerminalManager : MonoBehaviour
 
     }
 
+    //Sets the screen resolution
+    void setRes()
+    {
+        Screen.SetResolution((int)screenRes.x, (int)screenRes.y, isFullScreen);
+    }
+
+    //Scrolls scroll view to bottom
     IEnumerator ScrollToBottom()
     {
         //Scrolls Terminal UI to bottom of scroll view
