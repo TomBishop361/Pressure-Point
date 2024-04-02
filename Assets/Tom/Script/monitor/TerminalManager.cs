@@ -84,6 +84,8 @@ public class TerminalManager : MonoBehaviour
                 break;
             case "/oxygenreset": //Begins the oxygen fixing process
                 InvokeRepeating("SendFixCount", 1.67f, 1.67f);
+                UIResponse = Instantiate(UITextResponse, content.transform, false);
+                UIResponse.GetComponent<TMP_Text>().text = "Please Wait...";
                 break;
 
 
@@ -105,6 +107,13 @@ public class TerminalManager : MonoBehaviour
     {
         count++;
         SendMessage("FixCount", count, SendMessageOptions.DontRequireReceiver);
+        if(count == 3)
+        {
+            count = 0;
+            CancelInvoke();
+            
+        }
+        
     }
 
 
@@ -122,6 +131,18 @@ public class TerminalManager : MonoBehaviour
         LayoutRebuilder.ForceRebuildLayoutImmediate(content.GetComponent<RectTransform>());
         scrollRect.verticalNormalizedPosition = 0f;
     }
-   
-  
+
+    public void CallExitTerminal()
+    {
+        StartCoroutine("ExitTerminal");
+    }
+
+    public IEnumerator ExitTerminal()
+    {
+        inputField.enabled = false;
+        yield return new WaitForSeconds(1f);
+        transform.GetComponent<BoxCollider>().enabled = true;
+    }
+
+
 }

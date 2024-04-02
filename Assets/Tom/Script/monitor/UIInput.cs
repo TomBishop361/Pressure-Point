@@ -50,7 +50,7 @@ public class UIInput : MonoBehaviour
         // process the raycast results
         foreach (var result in results)
         {
-            Debug.Log(result.gameObject.name);
+            
             // setup the new event data
             PointerEventData eventData = new PointerEventData(EventSystem.current);
             eventData.position = mousePosition;

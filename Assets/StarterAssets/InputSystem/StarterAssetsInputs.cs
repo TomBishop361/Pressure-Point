@@ -27,30 +27,31 @@ namespace StarterAssets
 		public bool cursorInputForLook = true;
 
 		[Header("Misc")]
-		public int playerState =0;
+		public int playerState = 0;
 		public GameObject InteractedObj;
 		Vector3 _direction;
-        private Quaternion _lookRotation;
-        float lerpRotationy;
+		private Quaternion _lookRotation;
+		float lerpRotationy;
 		float lerpX;
 		float lerpZ;
 		bool lerping;
 		GameObject HeldObject;
 		bool isHeldObject;
+		public bool isRepairing;
+		float interacting;
 
-        public void OnMove(InputValue value)
-		{
-            MoveInput(value.Get<Vector2>());
-
+		public void OnMove(InputValue value){ 
+			move = value.Get<Vector2>();
 		}
 
 		public void setPlayerStateZero() //sets player back to state 0 (called by Terminal button)
 		{
 			playerState = 0;
-		}
+		}		
 
-		public void OnInteract()
-        {
+		public void OnInteract(InputValue value)
+		{
+			interacting = value.Get<float>();
 			if (playerState == 0)
 			{
 				RaycastHit hit;
@@ -61,14 +62,18 @@ namespace StarterAssets
 				// to see if it is about to hit anything.
 				if (Physics.SphereCast(p1, 0.08f, Camera.main.transform.forward, out hit, 2.0f))
 				{
+					Debug.Log("hit");
 					//Comparing hit object tag to check what action to perform					
 					if (hit.transform.CompareTag("PC"))
 					{
 						Debug.Log("PC Hit");
+						hit.transform.GetComponent<BoxCollider>().enabled = false;
 						InteractedObj = hit.transform.gameObject;
 						playerState = 2; //PC State
-                        StartCoroutine(LerpToInteract());
-						hit.transform.GetComponent<TerminalManager>().inputField.ActivateInputField();
+						StartCoroutine(LerpToInteract());
+                        hit.transform.GetComponent<TerminalManager>().inputField.enabled = true;
+                        hit.transform.GetComponent<TerminalManager>().inputField.ActivateInputField();
+                        
                     }
 					if (hit.transform.CompareTag("Valve"))
 					{
@@ -76,10 +81,10 @@ namespace StarterAssets
 						InteractedObj = hit.transform.gameObject;
 						playerState = 1;//valve state
 						StartCoroutine(LerpToInteract());
+						return;
 					}
 					if (hit.transform.CompareTag("PickUp"))
 					{
-						Debug.Log("Hit");
 						if (isHeldObject == false)
 						{
 							isHeldObject = true;
@@ -89,7 +94,8 @@ namespace StarterAssets
 							HeldObject = hit.transform.gameObject;
 						}
 					}
-					if (hit.transform.CompareTag("Screw")) {
+					if (hit.transform.CompareTag("Screw"))
+					{
 						if (HeldObject != null && HeldObject.transform.name == "Screwdriver")
 						{
 							hit.transform.GetComponent<Screw>().UnScrew();
@@ -99,35 +105,47 @@ namespace StarterAssets
 					{
 						hit.transform.GetComponent<Switch>().flip();
 					}
-                } 
-			}
-			else if(playerState == 1) 
-			{
-				playerState = 0;
-			}
-		}
+					if (hit.transform.CompareTag("Breach"))
+					{
+						if (HeldObject != null && HeldObject.transform.name == "BlowTorch")
+						{
+							isRepairing = true;
+							
+						}
+					}				
 
-        void OnDrop()
-        {
-            if (isHeldObject == true)
+				}				
+			}
+            if (playerState == 1)
             {
-                HeldObject.transform.parent = null;
-				if(HeldObject.transform.name == "Screwdriver")
-				{
-                    HeldObject.transform.position = new Vector3(-24.311f, 9.123f, -24.76f);
-                    HeldObject.transform.localEulerAngles = new Vector3(90, 90, 0);
-				}
-				else
-				{
-                    HeldObject.transform.position = new Vector3(-20.306f, 7.5f, -27.129f);
-                    HeldObject.transform.localEulerAngles = new Vector3(0, 0, 0);
-                } 
-                isHeldObject = false;
+                playerState = 0;
+				return;
+
             }
         }
 
+		//Drops held item
+		void OnDrop()
+		{
+			if (isHeldObject == true)
+			{
+				HeldObject.transform.parent = null;
+				if (HeldObject.transform.name == "Screwdriver")
+				{
+					HeldObject.transform.position = new Vector3(-24.311f, 9.123f, -24.76f);
+					HeldObject.transform.localEulerAngles = new Vector3(90, 90, 0);
+				}
+				else
+				{
+					HeldObject.transform.position = new Vector3(-20.306f, 7.5f, -27.129f);
+					HeldObject.transform.localEulerAngles = new Vector3(0, 0, 0);
+				}
+				isHeldObject = false;
+			}
+		}
 
-        public void OnLook(InputValue value)
+
+		public void OnLook(InputValue value)
 		{
 			switch (playerState)
 			{
@@ -138,34 +156,21 @@ namespace StarterAssets
 					}
 					break;
 				case 1: // Valve turning
-					look = new Vector2 (0,0);
-					
+					look = new Vector2(0, 0);
+
 					break;
 				case 2://PC
-                    if (cursorInputForLook)
-                    {
-                        LookInput(value.Get<Vector2>());
-                    }
-                    break;
-
-            }
-			
-		}
-
-		public void OnJump(InputValue value)
-		{
-			switch (playerState)
-			{
-				case 0:
-					JumpInput(value.isPressed);
-					break;
-				case 1: // Valve turning
-
+					if (cursorInputForLook)
+					{
+						LookInput(value.Get<Vector2>());
+					}
 					break;
 
 			}
-			
+
 		}
+
+
 
 		public void OnSprint(InputValue value)
 		{
@@ -174,15 +179,10 @@ namespace StarterAssets
 				case 0:
 					SprintInput(value.isPressed);
 					break;
-				case 1: // Valve turning
-
-					break;
-
 			}
-			
 		}
 
-        
+
 
 		//lerp subrotine 
 		IEnumerator LerpToInteract()
@@ -193,55 +193,55 @@ namespace StarterAssets
 			{
 				float perc = 0;
 				perc = Easing.Linear(time);
-				lerpX = LerpScript.lerp(transform.position.x, InteractedObj.GetComponent<PosData>().interactPos.x,perc);
+				lerpX = LerpScript.lerp(transform.position.x, InteractedObj.GetComponent<PosData>().interactPos.x, perc);
 				lerpZ = LerpScript.lerp(transform.position.z, InteractedObj.GetComponent<PosData>().interactPos.y, perc);
-                time += Time.deltaTime;
+				time += Time.deltaTime;
 				yield return null;
 			}
-			lerping= false;			
+			lerping = false;
 		}
 
 
-        private void Update()
-        {
+		private void Update()
+		{
 			//calculates roation of interacted object
 			if (InteractedObj != null)
-			{				
-                _direction = (InteractedObj.transform.position - transform.position);
-                _lookRotation = Quaternion.LookRotation(_direction);
-            }
-
-			if (lerping) {
-                //moves player to correct position to interact
-                _lookRotation.x = transform.rotation.x; _lookRotation.z = transform.rotation.z; //Changes values so Y is the only axis that rotates
-                transform.rotation = Quaternion.Slerp(transform.rotation, _lookRotation, 20);  
-                transform.position = new Vector3(lerpX, transform.position.y, lerpZ);
+			{
+				_direction = (InteractedObj.transform.position - transform.position);
+				_lookRotation = Quaternion.LookRotation(_direction);
 			}
+
+			if (lerping)
+			{
+				//moves player to correct position to interact
+				_lookRotation.x = transform.rotation.x; _lookRotation.z = transform.rotation.z; //Changes values so Y is the only axis that rotates
+				transform.rotation = Quaternion.Slerp(transform.rotation, _lookRotation, 20);
+				transform.position = new Vector3(lerpX, transform.position.y, lerpZ);
+			}
+
+			Debug.Log(playerState);
+
+		}
+
+        private void FixedUpdate()
+        {     
+            if(interacting == 0 )isRepairing = false;
 
         }
 
 
 
-        public void MoveInput(Vector2 newMoveDirection)
-		{
-			move = newMoveDirection;
-		} 
-
-		public void LookInput(Vector2 newLookDirection)
+        public void LookInput(Vector2 newLookDirection)
 		{
 			look = newLookDirection;
 		}
 
-		public void JumpInput(bool newJumpState)
-		{
-			jump = newJumpState;
-		}
 
 		public void SprintInput(bool newSprintState)
 		{
 			sprint = newSprintState;
 		}
-		
+
 		private void OnApplicationFocus(bool hasFocus)
 		{
 			//Change so this only happens when player is NOT in terminal state
@@ -253,5 +253,7 @@ namespace StarterAssets
 			Cursor.lockState = newState ? CursorLockMode.Locked : CursorLockMode.None;
 		}
 	}
-	
+
+
+
 }
