@@ -54,74 +54,77 @@ namespace StarterAssets
 			interacting = value.Get<float>();
 			if (playerState == 0)
 			{
-				RaycastHit hit;
-
-				Vector3 p1 = Camera.main.transform.position;
-
-				// Cast a sphere wrapping character controller 10 meters forward
-				// to see if it is about to hit anything.
-				if (Physics.SphereCast(p1, 0.08f, Camera.main.transform.forward, out hit, 2.0f))
+				if (interacting == 1)//if mouse down
 				{
-					Debug.Log("hit");
-					//Comparing hit object tag to check what action to perform					
-					if (hit.transform.CompareTag("PC"))
-					{
-						Debug.Log("PC Hit");
-						hit.transform.GetComponent<BoxCollider>().enabled = false;
-						InteractedObj = hit.transform.gameObject;
-						playerState = 2; //PC State
-						StartCoroutine(LerpToInteract());
-                        hit.transform.GetComponent<TerminalManager>().inputField.enabled = true;
-                        hit.transform.GetComponent<TerminalManager>().inputField.ActivateInputField();
-                        
-                    }
-					if (hit.transform.CompareTag("Valve"))
-					{
-						Debug.Log("Valve HIT");
-						InteractedObj = hit.transform.gameObject;
-						playerState = 1;//valve state
-						StartCoroutine(LerpToInteract());
-						return;
-					}
-					if (hit.transform.CompareTag("PickUp"))
-					{
-						if (isHeldObject == false)
-						{
-							isHeldObject = true;
-							hit.transform.SetParent(Camera.main.transform, false);
-							hit.transform.localPosition = new Vector3(0.435f, -0.5f, 0.741f);
-							hit.transform.transform.localEulerAngles = new Vector3(0, 0, 0);
-							HeldObject = hit.transform.gameObject;
-						}
-					}
-					if (hit.transform.CompareTag("Screw"))
-					{
-						if (HeldObject != null && HeldObject.transform.name == "Screwdriver")
-						{
-							hit.transform.GetComponent<Screw>().UnScrew();
-						}
-					}
-					if (hit.transform.CompareTag("Switch"))
-					{
-						hit.transform.GetComponent<Switch>().flip();
-					}
-					if (hit.transform.CompareTag("Breach"))
-					{
-						if (HeldObject != null && HeldObject.transform.name == "BlowTorch")
-						{
-							isRepairing = true;
-							
-						}
-					}				
+					RaycastHit hit;
 
-				}				
+					Vector3 p1 = Camera.main.transform.position;
+
+					// Cast a sphere wrapping character controller 10 meters forward
+					// to see if it is about to hit anything.
+					if (Physics.SphereCast(p1, 0.08f, Camera.main.transform.forward, out hit, 2.0f))
+					{
+						Debug.Log("hit");
+						//Comparing hit object tag to check what action to perform					
+						if (hit.transform.CompareTag("PC"))
+						{
+							Debug.Log("PC Hit");
+							hit.transform.GetComponent<BoxCollider>().enabled = false;
+							InteractedObj = hit.transform.gameObject;
+							playerState = 2; //PC State
+							StartCoroutine(LerpToInteract());
+							hit.transform.GetComponent<TerminalManager>().inputField.enabled = true;
+							hit.transform.GetComponent<TerminalManager>().inputField.ActivateInputField();
+
+						}
+						if (hit.transform.CompareTag("Valve"))
+						{
+							Debug.Log("Valve HIT");
+							InteractedObj = hit.transform.gameObject;
+							playerState = 1;//valve state
+							StartCoroutine(LerpToInteract());
+							return;
+						}
+						if (hit.transform.CompareTag("PickUp"))
+						{
+							if (isHeldObject == false)
+							{
+								isHeldObject = true;
+								hit.transform.SetParent(Camera.main.transform, false);
+								hit.transform.localPosition = new Vector3(0.435f, -0.5f, 0.741f);
+								hit.transform.transform.localEulerAngles = new Vector3(0, 0, 0);
+								HeldObject = hit.transform.gameObject;
+							}
+						}
+						if (hit.transform.CompareTag("Screw"))
+						{
+							if (HeldObject != null && HeldObject.transform.name == "Screwdriver")
+							{
+								hit.transform.GetComponent<Screw>().UnScrew();
+							}
+						}
+						if (hit.transform.CompareTag("Switch"))
+						{
+							hit.transform.GetComponent<Switch>().flip();
+						}
+						if (hit.transform.CompareTag("Breach"))
+						{
+							if (HeldObject != null && HeldObject.transform.name == "BlowTorch")
+							{
+								isRepairing = true;
+
+							}
+						}
+
+					}
+				}
+				if (playerState == 1)
+				{
+					playerState = 0;
+					return;
+
+				}
 			}
-            if (playerState == 1)
-            {
-                playerState = 0;
-				return;
-
-            }
         }
 
 		//Drops held item

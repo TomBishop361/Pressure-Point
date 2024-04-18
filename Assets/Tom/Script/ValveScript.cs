@@ -19,6 +19,7 @@ public class ValveScript : MonoBehaviour
     //sets Valve to be in "Broken" state (resetting values)
     void breakValve()
     {
+        manager.breakSystem(GetComponent<ValveScript>());
         alertLight.GetComponent<MeshRenderer>().material = mats[0];
         Steam.GetComponent<ParticleSystem>().Play();
         progress = 0;
@@ -28,7 +29,7 @@ public class ValveScript : MonoBehaviour
 
     private void Start()
     {
-        breakValve();
+        //breakValve();
         StatInputs = player.GetComponent<StarterAssetsInputs>();
     }
 
@@ -44,7 +45,7 @@ public class ValveScript : MonoBehaviour
                 StatInputs.playerState = 0;
                 alertLight.GetComponent<MeshRenderer>().material = mats[1];
                 Steam.GetComponent<ParticleSystem>().Stop();
-                manager.BrokenCount--;
+                manager.fix(GetComponent<ValveScript>());
                 broken = false;
             }
         }

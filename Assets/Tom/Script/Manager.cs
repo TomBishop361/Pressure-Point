@@ -13,10 +13,26 @@ public class Manager : MonoBehaviour
     int randomMulti;
     float timeCount;
     int depth;
-    GameObject[] activeEvent;
-    GameObject[] inactiveEvent;
+
+ 
+    [SerializeField]Component[] components;
+    Dictionary<Component, bool> Breakables =
+        new Dictionary<Component, bool>();
+
+   
+
+    private void Start()
+    {
+        foreach(Component comp in components)
+        {
+            Breakables.Add(comp, false);
+            Debug.Log(comp.name);
+        }
+        
+    }
+
     // Start is called before the first frame update
-    void Start()
+    public void GameStart()
     {
         InvokeRepeating("randomEvents", 1, 3);
         InvokeRepeating("ChangeRandomMulti", 1, 60);
@@ -30,7 +46,17 @@ public class Manager : MonoBehaviour
 
     private void randomEvents()
     {
-        int random = Random.Range(0,randomMulti);
+        int random = genRandom();
+        if (Breakables[components[random]] == false)
+        {
+
+        }
+        
+
+    }
+    int genRandom()
+    {
+        return Random.Range(0, randomMulti);
     }
 
     private void depthCalc()
@@ -47,4 +73,21 @@ public class Manager : MonoBehaviour
         water.riseCalc(BrokenCount);
         //transform.position += Vector3.up * 0.1f * Time.deltaTime;
     }
+
+    public void breakSystem(Component comp)
+    {
+        BrokenCount++;
+        Breakables[comp] = true;
+        
+    }
+
+
+    public void fix(Component comp)
+    {
+        BrokenCount--;
+        Breakables[comp] = false;
+    }
+
+
+
 }

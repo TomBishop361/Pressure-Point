@@ -9,6 +9,7 @@ using UnityEngine.UIElements;
 public class TerminalManager : MonoBehaviour
 {
     //Visible Variables
+    [SerializeField] Manager manager;
     [Header("UI Prefabs")]
     [SerializeField] GameObject UIInputPanel;
     [SerializeField] GameObject UITextResponse;
@@ -16,6 +17,7 @@ public class TerminalManager : MonoBehaviour
     public TMP_InputField inputField;
     [SerializeField] GameObject content;
     [SerializeField] ScrollRect scrollRect;
+    
     
 
     //Hidden Variables
@@ -39,6 +41,9 @@ public class TerminalManager : MonoBehaviour
                 UIResponse.GetComponent<TMP_Text>().text = "Here are a list of Commands:\r\nCheck Oxygen Level      /OxygenLevel\r\nReset Oxygen            /OxygenReset\r\nStart Mission           /Start\r\nMission Logs            /logs\r\nQuit Game               /Quit\r\nGame Settings           /settings";
                 break;
             case "/start":
+                manager.GameStart();
+                UIResponse = Instantiate(UITextResponse, content.transform, false);
+                UIResponse.GetComponent<TMP_Text>().text = "Commencing decent protocol...";
                 break;
             case "/settings":
                 UIResponse = Instantiate(UITextResponse, content.transform, false);
@@ -87,6 +92,7 @@ public class TerminalManager : MonoBehaviour
                 UIResponse = Instantiate(UITextResponse, content.transform, false);
                 UIResponse.GetComponent<TMP_Text>().text = "Please Wait...";
                 break;
+           
 
 
             default:

@@ -25,7 +25,7 @@ public class PCScript : MonoBehaviour
     void Start()
     {
        volume.profile.TryGet<Vignette>(out vg);
-        breakOxygen();
+        //breakOxygen();
     }
 
     void breakOxygen()

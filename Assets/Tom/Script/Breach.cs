@@ -15,20 +15,20 @@ public class Breach : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        BreachHull();
+        //BreachHull();
     }
 
     void BreachHull()
     {
         isBroken = true;
         progress = 0f;
-        manager.BrokenCount++;
+        manager.breakSystem(GetComponent<Breach>());
     }
 
     void FixHull()
     {
         isBroken = false;
-        manager.BrokenCount--;
+        manager.fix(GetComponent<Breach>());
         Destroy(transform.gameObject);
     }
 
