@@ -18,18 +18,19 @@ public class Screw : MonoBehaviour
     public void UnScrew()
     {
         //Checks if interating should Screw or unscrew depending on Fbox Broken state & screw state
-        if (FBox.doorISOpen == false)
+        if (FBox.doorISOpen == false)//if closed
         {
-            if (!isUnscrewed)
+            if (!isUnscrewed)// if is screwed
             {
-                if (FBox.isBroken)
+                if (FBox.isBroken && lerping == false)//if box is broken
                 {
                     StartCoroutine(UnScrewLerp());
                 }
             }
             else
             {
-                StartCoroutine(ScrewLerp());
+                if(lerping == false) StartCoroutine(ScrewLerp());
+                
             }
         }
         
@@ -52,14 +53,14 @@ public class Screw : MonoBehaviour
         }
         lerping = false;
         FBox.screwCount(1);
-        isUnscrewed = true;
+        isUnscrewed = true;//is unscrewed
     }
 
     //lerps screw to mimic screwing 
     IEnumerator ScrewLerp()
     {
         FBox.screwCount(-1);
-        isUnscrewed = false;
+        isUnscrewed = false; // is screwed
         lerping = true;
         float time = 0;
         while (time < 1f)

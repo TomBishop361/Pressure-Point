@@ -86,7 +86,7 @@ public class FuseBox : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        BreakFuses(); 
+        //BreakFuses(); 
         
     }
 
