@@ -7,7 +7,6 @@ using UnityEngine;
 
 public class Breach : MonoBehaviour
 {
-    [SerializeField] Manager manager;
     [SerializeField] StarterAssetsInputs inputs;
     bool isBroken;
     float progress = 0f;
@@ -18,17 +17,17 @@ public class Breach : MonoBehaviour
         //BreachHull();
     }
 
-    void BreachHull()
+    public void Break()
     {
         isBroken = true;
         progress = 0f;
-        manager.breakSystem(GetComponent<Breach>());
+        Manager.Instance.breakSystem(GetComponent<Breach>());
     }
 
     void FixHull()
     {
         isBroken = false;
-        manager.fix(GetComponent<Breach>());
+        Manager.Instance.fix(GetComponent<Breach>());
         Destroy(transform.gameObject);
     }
 

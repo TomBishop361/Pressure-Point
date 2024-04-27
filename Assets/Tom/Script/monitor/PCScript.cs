@@ -28,7 +28,7 @@ public class PCScript : MonoBehaviour
         //breakOxygen();
     }
 
-    void breakOxygen()
+    void Break()
     {
         isBroken = true;
         //manager.BrokenCount++;

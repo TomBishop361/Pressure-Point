@@ -6,7 +6,6 @@ using UnityEngine;
 public class ValveScript : MonoBehaviour
 {
 
-    [SerializeField]Manager manager;
     [SerializeField] GameObject player;
     StarterAssetsInputs StatInputs;
     [SerializeField] GameObject alertLight;
@@ -17,9 +16,9 @@ public class ValveScript : MonoBehaviour
     public float progress = 0;
 
     //sets Valve to be in "Broken" state (resetting values)
-    void breakValve()
+    void Break()
     {
-        manager.breakSystem(GetComponent<ValveScript>());
+        Manager.Instance.breakSystem(GetComponent<ValveScript>());
         alertLight.GetComponent<MeshRenderer>().material = mats[0];
         Steam.GetComponent<ParticleSystem>().Play();
         progress = 0;
@@ -45,7 +44,7 @@ public class ValveScript : MonoBehaviour
                 StatInputs.playerState = 0;
                 alertLight.GetComponent<MeshRenderer>().material = mats[1];
                 Steam.GetComponent<ParticleSystem>().Stop();
-                manager.fix(GetComponent<ValveScript>());
+                Manager.Instance.fix(GetComponent<ValveScript>());
                 broken = false;
             }
         }

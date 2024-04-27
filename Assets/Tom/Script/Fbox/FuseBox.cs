@@ -8,7 +8,6 @@ using UnityEngine.UIElements.Experimental;
 public class FuseBox : MonoBehaviour
 {
     [Header("Object References")]
-    [SerializeField] Manager manager;
     [SerializeField] GameObject alertLight;
     [SerializeField] GameObject hinge;
     [Header("Materials")]
@@ -34,7 +33,7 @@ public class FuseBox : MonoBehaviour
         if (isBroken == false && sCount == 0) //if is not broken && all screws are screwed
         {
             alertLight.GetComponent<Renderer>().material = mats[1]; // green material (Fixed)
-            manager.fix(GetComponent<FuseBox>());
+            Manager.Instance.fix(GetComponent<FuseBox>());
         }
     }
 
@@ -73,10 +72,10 @@ public class FuseBox : MonoBehaviour
     }
 
     //Sets Fuse box to Broken state
-    public void BreakFuses()
+    public void Break()
     {
         isBroken = true;
-        manager.breakSystem(GetComponent<FuseBox>());
+        Manager.Instance.breakSystem(GetComponent<FuseBox>());
         alertLight.GetComponent<Renderer>().material = mats[0];
         BroadcastMessage("breakSwitch",null, SendMessageOptions.DontRequireReceiver);//Calls event in all switches to go to broken state
     }

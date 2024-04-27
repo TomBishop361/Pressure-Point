@@ -222,7 +222,7 @@ namespace StarterAssets
 				transform.position = new Vector3(lerpX, transform.position.y, lerpZ);
 			}
 
-			Debug.Log(playerState);
+			
 
 		}
 
