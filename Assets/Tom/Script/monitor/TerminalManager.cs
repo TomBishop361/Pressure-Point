@@ -16,8 +16,15 @@ public class TerminalManager : MonoBehaviour
     public TMP_InputField inputField;
     [SerializeField] GameObject content;
     [SerializeField] ScrollRect scrollRect;
-    
-    
+
+    [Header("Convict logs")]
+    [SerializeField] GameObject ScientistLog;
+    [SerializeField] GameObject SaboteurLog;
+    [SerializeField] GameObject FactoryLog;
+    [SerializeField] GameObject ConvictLog;
+
+
+
 
     //Hidden Variables
     bool isFullScreen;
@@ -92,7 +99,23 @@ public class TerminalManager : MonoBehaviour
                 UIResponse = Instantiate(UITextResponse, content.transform, false);
                 UIResponse.GetComponent<TMP_Text>().text = "Please Wait...";
                 break;
-           
+            case "/logs":
+                UIResponse = Instantiate(UITextResponse, content.transform, false);
+                UIResponse.GetComponent<TMP_Text>().text = "Scientist Log        /Log1\r\nSaboteur's Log       /Log2\r\nFactorWorkers Log    /Log3\r\nConvict's Log        /Log4";
+                break;
+            case "/log1":
+                Instantiate(ScientistLog, content.transform, false);
+                break;
+            case "/log2":
+                Instantiate(SaboteurLog, content.transform, false);
+                break;
+            case "/log3":
+                Instantiate(FactoryLog, content.transform, false);
+                break;
+            case "/log4":
+                Instantiate(ConvictLog, content.transform, false);
+                break;
+
 
 
             default:

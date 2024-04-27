@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8531552347087059448}
   - component: {fileID: 2222188309468721870}
   m_Layer: 5
-  m_Name: Text (TMP) (1)
+  m_Name: Convict Scientist's Journal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

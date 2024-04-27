@@ -25,14 +25,13 @@ public class PCScript : MonoBehaviour
     void Start()
     {
        volume.profile.TryGet<Vignette>(out vg);
-        //breakOxygen();
     }
 
     void Break()
     {
         isBroken = true;
         //manager.BrokenCount++;
-        speed = 0.00025f;
+        speed = 0.00016f;
         vgIntensityEnd = 1;
         foreach(GameObject light in lights)
         {
@@ -90,7 +89,7 @@ public class PCScript : MonoBehaviour
         }
         if(oxygenLevel <= 0)
         {
-            //Death behaviour
+            Manager.Instance.Death(1);
         }
     }
 

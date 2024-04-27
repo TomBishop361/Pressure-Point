@@ -17,6 +17,7 @@ public class Manager : MonoBehaviour
     int randomMulti = 15;
     int depth;
     int timeRemaining = 300;
+    [SerializeField]GameObject deathScreen;
 
  
     [SerializeField]Component[] components;
@@ -122,6 +123,11 @@ public class Manager : MonoBehaviour
         
     }
 
+    public void Death(int DeathType)
+    {
+        deathScreen.SetActive(true);
+        
+    }
 
     public void fix(Component comp)
     {
