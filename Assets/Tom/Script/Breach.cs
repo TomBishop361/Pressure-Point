@@ -7,6 +7,7 @@ using UnityEngine;
 
 public class Breach : MonoBehaviour
 {
+    [SerializeField] ParticleSystem water;
     [SerializeField] StarterAssetsInputs inputs;
     bool isBroken;
     float progress = 0f;
@@ -14,23 +15,26 @@ public class Breach : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gameObject.SetActive(false);
+        
+        
     }
 
     public void Break()
     {
+        gameObject.SetActive(true);
+        Debug.Log("Breach");
+        water.Play();
         isBroken = true;
         progress = 0f;
-        Manager.Instance.breakSystem(GetComponent<Breach>());
-        gameObject.SetActive(true);
+
     }
 
     void FixHull()
     {
         isBroken = false;
+        water.Stop();
         Manager.Instance.fix(GetComponent<Breach>());
         Destroy(transform.gameObject);
-        gameObject.SetActive(false);
     }
 
     // Update is called once per frame

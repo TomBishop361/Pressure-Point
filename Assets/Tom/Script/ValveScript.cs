@@ -18,7 +18,6 @@ public class ValveScript : MonoBehaviour
     //sets Valve to be in "Broken" state (resetting values)
     void Break()
     {
-        Manager.Instance.breakSystem(GetComponent<ValveScript>());
         alertLight.GetComponent<MeshRenderer>().material = mats[0];
         Steam.GetComponent<ParticleSystem>().Play();
         progress = 0;

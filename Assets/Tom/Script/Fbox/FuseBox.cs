@@ -75,7 +75,6 @@ public class FuseBox : MonoBehaviour
     public void Break()
     {
         isBroken = true;
-        Manager.Instance.breakSystem(GetComponent<FuseBox>());
         alertLight.GetComponent<Renderer>().material = mats[0];
         BroadcastMessage("breakSwitch",null, SendMessageOptions.DontRequireReceiver);//Calls event in all switches to go to broken state
     }
@@ -85,7 +84,7 @@ public class FuseBox : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //BreakFuses(); 
+        
         
     }
 

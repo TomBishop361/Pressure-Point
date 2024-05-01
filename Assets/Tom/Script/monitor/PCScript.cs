@@ -24,12 +24,12 @@ public class PCScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+       
        volume.profile.TryGet<Vignette>(out vg);
     }
 
-    void Break()
-    {
-        isBroken = true;
+    void Break(){       
+
         speed = 0.00016f;
         vgIntensityEnd = 1;
         foreach(GameObject light in lights)

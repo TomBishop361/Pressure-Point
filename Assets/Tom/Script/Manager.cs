@@ -14,7 +14,7 @@ public class Manager : MonoBehaviour
     [SerializeField] TextMeshPro DepthCounter;
     [Header("Misc")]
     public int BrokenCount;
-    int randomMulti = 15;
+    int randomMulti = 5;
     int depth;
     int timeRemaining = 300;
     [SerializeField]GameObject deathScreen;
@@ -42,7 +42,8 @@ public class Manager : MonoBehaviour
         foreach(Component comp in components)
         {
             Breakables.Add(comp, false);
-            Debug.Log(comp.name);
+            Debug.Log(Breakables[comp]);
+
         }
         
     }
@@ -50,8 +51,7 @@ public class Manager : MonoBehaviour
     // Start is called before the first frame update
     public void GameStart()
     {
-        //InvokeRepeating("randomEvents", 1, 3);
-        //InvokeRepeating("ChangeRandomMulti", 1, 60);
+        
         StartCoroutine("timerUpdate");
     }
 
@@ -78,13 +78,14 @@ public class Manager : MonoBehaviour
     private void ChangeRandomMulti()
     {
         
-        randomMulti -=5;
+        randomMulti -=1;
         
     }
 
     private void randomEvents()
     {        
         int random = genRandom(randomMulti);
+        Debug.Log("randomEvent" + random);
         if(random == 1)
         {
             selectBreak();            
@@ -93,15 +94,18 @@ public class Manager : MonoBehaviour
 
     int genRandom(int max)
     {
-        return Random.Range(1, max);
+        return Random.Range(0, max);
     }
 
     void selectBreak()
     {
         int random = genRandom(components.Length);
-        if (components.ElementAt(random) == true)
+        Debug.Log(random);
+        if (Breakables.ElementAt(random).Value == false)
         {
-            components.ElementAt(random).gameObject.SendMessage("Break", SendMessageOptions.DontRequireReceiver);
+            Breakables.ElementAt(random).Key.gameObject.SendMessage("Break", SendMessageOptions.DontRequireReceiver);
+            BrokenCount++;
+            Breakables[Breakables.ElementAt(random).Key] = true;
         }
         else
         {
@@ -113,15 +117,10 @@ public class Manager : MonoBehaviour
     void Update()
     {
         water.riseCalc(BrokenCount);
-        //transform.position += Vector3.up * 0.1f * Time.deltaTime;
-    }
-
-    public void breakSystem(Component comp)
-    {
-        BrokenCount++;
-        Breakables[comp] = true;
         
     }
+
+   
 
     public void Death(int DeathType)
     {
@@ -132,9 +131,16 @@ public class Manager : MonoBehaviour
     public void fix(Component comp)
     {
         BrokenCount--;
-        Breakables[comp] = false;
+        StartCoroutine(CoolDown(comp));
     }
 
+    private IEnumerator CoolDown(Component comp)
+    {
+        yield return new WaitForSeconds(6f);
+        Breakables[comp] = false;
+        Debug.Log("Cool'd down");
+        
+    }
 
 
 }
