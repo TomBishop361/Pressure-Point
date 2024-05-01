@@ -14,7 +14,7 @@ public class Breach : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //BreachHull();
+        gameObject.SetActive(false);
     }
 
     public void Break()
@@ -22,6 +22,7 @@ public class Breach : MonoBehaviour
         isBroken = true;
         progress = 0f;
         Manager.Instance.breakSystem(GetComponent<Breach>());
+        gameObject.SetActive(true);
     }
 
     void FixHull()
@@ -29,6 +30,7 @@ public class Breach : MonoBehaviour
         isBroken = false;
         Manager.Instance.fix(GetComponent<Breach>());
         Destroy(transform.gameObject);
+        gameObject.SetActive(false);
     }
 
     // Update is called once per frame

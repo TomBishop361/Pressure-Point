@@ -30,7 +30,6 @@ public class PCScript : MonoBehaviour
     void Break()
     {
         isBroken = true;
-        //manager.BrokenCount++;
         speed = 0.00016f;
         vgIntensityEnd = 1;
         foreach(GameObject light in lights)
@@ -44,7 +43,7 @@ public class PCScript : MonoBehaviour
     public void FixOxygen()
     {
         isBroken = false;
-        //manager.BrokenCount--;
+        oxygenLevel = 100;
         StopCoroutine("OxygenCount");
         vgIntensityEnd = 0.1f;
         speed = 0.001f;
