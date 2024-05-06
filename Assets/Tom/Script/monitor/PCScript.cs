@@ -4,7 +4,6 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
-using UnityEngine.UIElements.Experimental;
 
 public class PCScript : MonoBehaviour
 {
@@ -23,9 +22,8 @@ public class PCScript : MonoBehaviour
     
     // Start is called before the first frame update
     void Start()
-    {
-       
-       volume.profile.TryGet<Vignette>(out vg);
+    {        
+        volume.profile.TryGet(out vg);
     }
 
     void Break(){       
@@ -37,7 +35,6 @@ public class PCScript : MonoBehaviour
             light.GetComponent<Renderer>().material = mats[1];
         }
         StartCoroutine("OxygenCount");
-
     }
 
     public void FixOxygen()
@@ -75,10 +72,10 @@ public class PCScript : MonoBehaviour
 
 
     IEnumerator OxygenCount()
-    {        
+    {
+        
         float time = 0;
-        while (time < 25f)
-        {
+        while (time < 25f){
             vg.intensity.value = LerpScript.lerp(vg.intensity.value, vgIntensityEnd, speed); 
             if (isBroken) oxygenLevel -= Time.deltaTime * 4;
             

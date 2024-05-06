@@ -4,11 +4,12 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class Manager : MonoBehaviour
 {
     public static Manager Instance { get; private set; }
-
+    
     [Header("Object References")]
     [SerializeField] WaterRise water;
     [SerializeField] TextMeshPro DepthCounter;
@@ -19,9 +20,9 @@ public class Manager : MonoBehaviour
     int timeRemaining = 300;
     [SerializeField]GameObject deathScreen;
 
- 
+   
     [SerializeField]Component[] components;
-    Dictionary<Component, bool> Breakables =
+    public Dictionary<Component, bool> Breakables =
         new Dictionary<Component, bool>();
 
    
@@ -42,17 +43,16 @@ public class Manager : MonoBehaviour
         foreach(Component comp in components)
         {
             Breakables.Add(comp, false);
-            Debug.Log(Breakables[comp]);
-
-        }
+            Debug.Log(comp.ToString());
+        }   
         
     }
 
     // Start is called before the first frame update
     public void GameStart()
     {
-        
         StartCoroutine("timerUpdate");
+
     }
 
     private IEnumerator timerUpdate()
@@ -84,7 +84,7 @@ public class Manager : MonoBehaviour
 
     private void randomEvents()
     {        
-        int random = genRandom(randomMulti);
+        int random = genRandom(2);
         Debug.Log("randomEvent" + random);
         if(random == 1)
         {
@@ -99,8 +99,12 @@ public class Manager : MonoBehaviour
 
     void selectBreak()
     {
+        if (Breakables.Values.All<bool>(value => value))
+        {
+            Debug.Log("all are broken");
+            return;
+        }
         int random = genRandom(components.Length);
-        Debug.Log(random);
         if (Breakables.ElementAt(random).Value == false)
         {
             Breakables.ElementAt(random).Key.gameObject.SendMessage("Break", SendMessageOptions.DontRequireReceiver);
@@ -132,6 +136,7 @@ public class Manager : MonoBehaviour
     {
         BrokenCount--;
         StartCoroutine(CoolDown(comp));
+        
     }
 
     private IEnumerator CoolDown(Component comp)
