@@ -24,7 +24,7 @@ public class TutorialAudioMang : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!audioSource.isPlaying && tutorial)
+        if (!audioSource.isPlaying && tutorial && Manager.Instance.BrokenCount == 0)
         {
             if (TutorialClips.Length > i)
             {
@@ -36,25 +36,35 @@ public class TutorialAudioMang : MonoBehaviour
             {
                 tutorial = false;
             }
+
         }
-        
+
     }
 
     IEnumerator delay()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
         audioSource.Play();
         i++;
-        
         switch (i)
         {
             case 2://Break FuseBox
                 Manager.Instance.Breakables.ElementAt(2).Key.gameObject.SendMessage("Break", SendMessageOptions.DontRequireReceiver);
+                Manager.Instance.BrokenCount++;
                 break;
-            default:
-                tutorial = true;
+            case 3://Break Valve
+                Manager.Instance.Breakables.ElementAt(1).Key.gameObject.SendMessage("Break", SendMessageOptions.DontRequireReceiver);
+                Manager.Instance.BrokenCount++;
+                break;
+            case 4://Breach Hull
+                Manager.Instance.Breakables.ElementAt(3).Key.gameObject.SendMessage("Break", SendMessageOptions.DontRequireReceiver);
+                Manager.Instance.BrokenCount++;
+                break;
+            case 5://Break Oxygen
+                Manager.Instance.Breakables.ElementAt(0).Key.gameObject.SendMessage("Break", SendMessageOptions.DontRequireReceiver);
+                Manager.Instance.BrokenCount++;
                 break;
         }
-        
+        tutorial = true;
     }
 }

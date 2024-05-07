@@ -26,8 +26,9 @@ public class PCScript : MonoBehaviour
         volume.profile.TryGet(out vg);
     }
 
-    void Break(){       
-
+    void Break(){
+        //Make sure coroutine isnt already running
+        StopCoroutine("OxygenCount");
         speed = 0.00016f;
         vgIntensityEnd = 1;
         foreach(GameObject light in lights)
@@ -46,6 +47,8 @@ public class PCScript : MonoBehaviour
         speed = 0.001f;
         StartCoroutine("OxygenCount");
         
+        Manager.Instance.fix(gameObject.GetComponent<PCScript>());
+
     }
 
     //breaks fixing process into 3 stagesl
@@ -87,6 +90,7 @@ public class PCScript : MonoBehaviour
         {
             Manager.Instance.Death(1);
         }
+        
     }
 
 

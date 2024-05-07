@@ -19,9 +19,8 @@ public class FuseBox : MonoBehaviour
     public bool lerping;
     float Roty;
     int sCount;
-    
 
-    
+
     public void screwCount(int num)
     {
         //counts number of unscrewed screws
@@ -77,15 +76,6 @@ public class FuseBox : MonoBehaviour
         isBroken = true;
         alertLight.GetComponent<Renderer>().material = mats[0];
         BroadcastMessage("breakSwitch",null, SendMessageOptions.DontRequireReceiver);//Calls event in all switches to go to broken state
-    }
-
-
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-        
     }
 
     // Update is called once per frame

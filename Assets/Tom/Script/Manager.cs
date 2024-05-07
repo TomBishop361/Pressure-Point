@@ -19,6 +19,7 @@ public class Manager : MonoBehaviour
     int depth;
     int timeRemaining = 300;
     [SerializeField]GameObject deathScreen;
+    bool playing = false;
 
    
     [SerializeField]Component[] components;
@@ -52,6 +53,7 @@ public class Manager : MonoBehaviour
     public void GameStart()
     {
         StartCoroutine("timerUpdate");
+        playing = true;
 
     }
 
@@ -120,7 +122,8 @@ public class Manager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        water.riseCalc(BrokenCount);
+        if (playing) water.riseCalc(BrokenCount);
+        if (playing) water.riseCalc(BrokenCount);
         
     }
 
@@ -143,7 +146,7 @@ public class Manager : MonoBehaviour
     {
         yield return new WaitForSeconds(6f);
         Breakables[comp] = false;
-        Debug.Log("Cool'd down");
+        Debug.Log("Cool'd down",comp);
         
     }
 

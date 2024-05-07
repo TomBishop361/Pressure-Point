@@ -7,6 +7,7 @@ using UnityEngine;
 
 public class Breach : MonoBehaviour
 {
+    [SerializeField] GameObject breachmdl;
     [SerializeField] ParticleSystem water;
     [SerializeField] StarterAssetsInputs inputs;
     bool isBroken;
@@ -21,7 +22,7 @@ public class Breach : MonoBehaviour
 
     public void Break()
     {
-        gameObject.SetActive(true);
+        breachmdl.SetActive(true);
         Debug.Log("Breach");
         water.Play();
         isBroken = true;
@@ -34,25 +35,27 @@ public class Breach : MonoBehaviour
         isBroken = false;
         water.Stop();
         Manager.Instance.fix(GetComponent<Breach>());
-        Destroy(transform.gameObject);
+        breachmdl.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(inputs != null && inputs.isRepairing && Vector3.Distance(transform.position,inputs.transform.position) < 2.0f)
+        if (isBroken)
         {
-            if(isBroken) progress += Time.deltaTime;
+            if (inputs != null && inputs.isRepairing && Vector3.Distance(transform.position, inputs.transform.position) < 2.0f)
+            {
+                if (isBroken) progress += Time.deltaTime;
 
+            }
+            else
+            {
+                inputs.isRepairing = false;
+            }
+            if (progress >= 5)
+            {
+                FixHull();
+            }
         }
-        else
-        {
-            inputs.isRepairing = false;
-        }
-        if(progress >= 5)
-        {
-            FixHull();
-        }
-        
     }
 }
