@@ -36,9 +36,11 @@ public class Switch : MonoBehaviour
     }
 
 
-    // Update is called once per frame
-    void Update()
+    public void resetFbox()
     {
-        
+        Debug.Log("sss");
+        statusLight.GetComponent<Renderer>().material = mats[0];
+        isBroken = false;
+        transform.localEulerAngles = new Vector3(-20, -90, 180);
     }
 }

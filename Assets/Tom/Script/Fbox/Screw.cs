@@ -8,12 +8,16 @@ public class Screw : MonoBehaviour
 {
 
     [SerializeField] FuseBox FBox;
+    Vector3 startPos;
     bool isUnscrewed;
     bool lerping;
     float Rotz;
-    float Posx; 
+    float Posx;
 
-
+    private void Start()
+    {
+        startPos = transform.position;
+    }
 
     public void UnScrew()
     {
@@ -38,8 +42,8 @@ public class Screw : MonoBehaviour
 
     //lerps screw to mimic an unscrewing motion
     IEnumerator UnScrewLerp()
-    {       
-        
+    {
+        float targetpos = transform.position.x + 0.1f;
         lerping = true;
         float time = 0;
         while (time < 1f)
@@ -51,14 +55,16 @@ public class Screw : MonoBehaviour
             time += Time.deltaTime;
             yield return null;
         }
-        lerping = false;
+        lerping = false;        
         FBox.screwCount(1);
         isUnscrewed = true;//is unscrewed
+        transform.position = new Vector3(targetpos, transform.position.y, transform.position.z);
     }
 
     //lerps screw to mimic screwing 
     IEnumerator ScrewLerp()
     {
+        float targetpos = transform.position.x - 0.001f;
         FBox.screwCount(-1);
         isUnscrewed = false; // is screwed
         lerping = true;
@@ -73,6 +79,7 @@ public class Screw : MonoBehaviour
             yield return null;
         }
         lerping = false;
+        transform.position = new Vector3 (targetpos, transform.position.y, transform.position.z);
         
 
     }
@@ -86,5 +93,12 @@ public class Screw : MonoBehaviour
             transform.position = new Vector3 (Posx, transform.position.y, transform.position.z);
             transform.localEulerAngles = new Vector3(0, 90, Rotz);
         }
+    }
+
+    public void resetFbox()
+    {
+        Debug.Log("WWWW");
+        if (isUnscrewed) StartCoroutine("ScrewLerp");
+        
     }
 }

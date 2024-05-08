@@ -5,6 +5,7 @@ using UnityEngine;
 public class WaterRise : MonoBehaviour
 {
     public float Speed;
+    public float waterLevel;
 
     public void riseCalc(int brokenCount)
     {
@@ -14,5 +15,6 @@ public class WaterRise : MonoBehaviour
     private void Update()
     {
         transform.position += Vector3.up * Speed * Time.deltaTime;
+        waterLevel = transform.position.y;
     }
 }

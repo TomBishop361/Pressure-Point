@@ -7,7 +7,7 @@ public class TutorialAudioMang : MonoBehaviour
 {
     public bool tutorial = false;
     public AudioClip[] TutorialClips;
-    AudioSource audioSource;
+    public AudioSource audioSource;
     int i = 0;
     // Start is called before the first frame update
 

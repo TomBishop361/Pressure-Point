@@ -140,7 +140,7 @@ namespace StarterAssets
 				}
 				else
 				{
-					HeldObject.transform.position = new Vector3(-20.306f, 7.5f, -27.129f);
+					HeldObject.transform.position = new Vector3(-20.186f, 8.375f, -27.338f);
 					HeldObject.transform.localEulerAngles = new Vector3(0, 0, 0);
 				}
 				isHeldObject = false;

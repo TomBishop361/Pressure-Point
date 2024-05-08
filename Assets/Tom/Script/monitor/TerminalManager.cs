@@ -53,8 +53,6 @@ public class TerminalManager : MonoBehaviour
             volpercString = input.text.Substring(15);
             volpercString.Replace(" ", "");
             volumePerc = int.Parse(volpercString);
-            Debug.Log(volpercString);
-            Debug.Log(volumePerc);
             input.text = ("/mastersoundset");
         }
 

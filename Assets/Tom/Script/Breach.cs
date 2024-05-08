@@ -10,30 +10,29 @@ public class Breach : MonoBehaviour
     [SerializeField] GameObject breachmdl;
     [SerializeField] ParticleSystem water;
     [SerializeField] StarterAssetsInputs inputs;
+    [SerializeField] AudioSource soundWater;
+    [SerializeField] AudioSource soundBreak;
     bool isBroken;
     float progress = 0f;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-        
-    }
-
+  
     public void Break()
     {
         breachmdl.SetActive(true);
         Debug.Log("Breach");
         water.Play();
+        soundWater.Play();
+        soundBreak.Play();
         isBroken = true;
         progress = 0f;
 
     }
 
-    void FixHull()
+    public void Fix()
     {
         isBroken = false;
         water.Stop();
+        soundWater.Stop();
         Manager.Instance.fix(GetComponent<Breach>());
         breachmdl.SetActive(false);
     }
@@ -54,7 +53,7 @@ public class Breach : MonoBehaviour
             }
             if (progress >= 5)
             {
-                FixHull();
+                Fix();
             }
         }
     }

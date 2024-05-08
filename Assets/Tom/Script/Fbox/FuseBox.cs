@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UIElements.Experimental;
@@ -10,6 +11,7 @@ public class FuseBox : MonoBehaviour
     [Header("Object References")]
     [SerializeField] GameObject alertLight;
     [SerializeField] GameObject hinge;
+    [SerializeField] AudioSource sound;
     [Header("Materials")]
     [SerializeField] Material[] mats;
     [Header("Public Variables")]
@@ -31,9 +33,16 @@ public class FuseBox : MonoBehaviour
         }
         if (isBroken == false && sCount == 0) //if is not broken && all screws are screwed
         {
-            alertLight.GetComponent<Renderer>().material = mats[1]; // green material (Fixed)
-            Manager.Instance.fix(GetComponent<FuseBox>());
+            Fix();          
+            
         }
+    }
+
+    public void Fix()
+    {
+        
+        alertLight.GetComponent<Renderer>().material = mats[1]; // green material (Fixed)
+        Manager.Instance.fix(GetComponent<FuseBox>());
     }
 
     //Lerp to open door
@@ -66,6 +75,7 @@ public class FuseBox : MonoBehaviour
             time += Time.deltaTime;
             yield return null;
         }
+        sound.Stop();
         lerping = false;
         doorISOpen=false;
     }
@@ -76,6 +86,7 @@ public class FuseBox : MonoBehaviour
         isBroken = true;
         alertLight.GetComponent<Renderer>().material = mats[0];
         BroadcastMessage("breakSwitch",null, SendMessageOptions.DontRequireReceiver);//Calls event in all switches to go to broken state
+        sound.Play();
     }
 
     // Update is called once per frame
@@ -93,5 +104,17 @@ public class FuseBox : MonoBehaviour
         }
         
 
+    }
+
+    private void resetFbox()
+    {
+        hinge.BroadcastMessage("resetFbox", SendMessageOptions.DontRequireReceiver);
+        sound.Stop();
+        sCount = 0;
+        switchCount = 0;
+        if (doorISOpen)
+        {
+            StartCoroutine("CloseLerp");
+        }
     }
 }

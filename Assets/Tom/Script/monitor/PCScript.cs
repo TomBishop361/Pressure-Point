@@ -11,6 +11,7 @@ public class PCScript : MonoBehaviour
     [SerializeField] Volume volume;   
     Vignette vg;
     [Header("References")]
+    [SerializeField] AudioSource sound;
     [SerializeField] GameObject[] lights;
     [SerializeField] Material[] mats; // 1 = red
     [Header("Other")]    
@@ -29,6 +30,7 @@ public class PCScript : MonoBehaviour
     void Break(){
         //Make sure coroutine isnt already running
         StopCoroutine("OxygenCount");
+        sound.Play();
         speed = 0.00016f;
         vgIntensityEnd = 1;
         foreach(GameObject light in lights)
@@ -38,7 +40,7 @@ public class PCScript : MonoBehaviour
         StartCoroutine("OxygenCount");
     }
 
-    public void FixOxygen()
+    public void Fix()
     {
         isBroken = false;
         oxygenLevel = 100;
@@ -46,7 +48,7 @@ public class PCScript : MonoBehaviour
         vgIntensityEnd = 0.1f;
         speed = 0.001f;
         StartCoroutine("OxygenCount");
-        
+        sound.Stop();
         Manager.Instance.fix(gameObject.GetComponent<PCScript>());
 
     }
@@ -67,7 +69,7 @@ public class PCScript : MonoBehaviour
             case 3: // after 5 (aprox)seconds fix oxygen
                 //set light 3
                 lights[2].GetComponent<Renderer>().material = mats[0];
-                FixOxygen();
+                Fix();
                 break;
         }        
     }
@@ -89,11 +91,6 @@ public class PCScript : MonoBehaviour
         if(oxygenLevel <= 0)
         {
             Manager.Instance.Death(1);
-        }
-        
-    }
-
-
-   
-  
+        }        
+    } 
 }

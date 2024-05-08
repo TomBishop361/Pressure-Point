@@ -10,6 +10,8 @@ public class ValveScript : MonoBehaviour
     StarterAssetsInputs StatInputs;
     [SerializeField] GameObject alertLight;
     [SerializeField] GameObject Steam;
+    [SerializeField] AudioSource SoundSteam;
+    [SerializeField] AudioSource SoundBreak;
     public Material[] mats;
     private bool broken;
     public Vector2 interactPos;
@@ -20,6 +22,8 @@ public class ValveScript : MonoBehaviour
     {
         alertLight.GetComponent<MeshRenderer>().material = mats[0];
         Steam.GetComponent<ParticleSystem>().Play();
+        SoundSteam.Play();
+        SoundBreak.Play();
         progress = 0;
         broken = true;
         
@@ -27,7 +31,7 @@ public class ValveScript : MonoBehaviour
 
     private void Start()
     {
-        //breakValve();
+        
         StatInputs = player.GetComponent<StarterAssetsInputs>();
     }
 
@@ -41,18 +45,19 @@ public class ValveScript : MonoBehaviour
             if (progress >= 1000)
             {
                 StatInputs.playerState = 0;
-                alertLight.GetComponent<MeshRenderer>().material = mats[1];
-                Steam.GetComponent<ParticleSystem>().Stop();
-                Manager.Instance.fix(GetComponent<ValveScript>());
-                broken = false;
+                Fix();
             }
         }
     }
 
-    private void Update()
-    {
 
+    void Fix()
+    {                
+        alertLight.GetComponent<MeshRenderer>().material = mats[1];
+        Steam.GetComponent<ParticleSystem>().Stop();
+        SoundSteam.Stop();
+        Manager.Instance.fix(GetComponent<ValveScript>());
+        broken = false;
     }
-
 
 }

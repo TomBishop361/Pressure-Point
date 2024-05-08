@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,7 @@ public class Manager : MonoBehaviour
     [Header("Object References")]
     [SerializeField] WaterRise water;
     [SerializeField] TextMeshPro DepthCounter;
+    [SerializeField] TutorialAudioMang tutorial;
     [Header("Misc")]
     public int BrokenCount;
     int randomMulti = 5;
@@ -52,8 +54,22 @@ public class Manager : MonoBehaviour
     // Start is called before the first frame update
     public void GameStart()
     {
+        
+        tutorial.audioSource.Stop();
+        tutorial.gameObject.SetActive(false);
+        for (int i = 0; i < Breakables.Count; i++)
+        {            
+            Component key = Breakables.ElementAt(i).Key;
+            key.gameObject.SendMessage("Fix", SendMessageOptions.DontRequireReceiver);
+            if(i == 2)//powerbox
+            {
+                Breakables.ElementAt(i).Key.gameObject.BroadcastMessage("resetFbox", SendMessageOptions.DontRequireReceiver);
+            }
+        }
+        BrokenCount = 0;
         StartCoroutine("timerUpdate");
         playing = true;
+
 
     }
 
@@ -74,7 +90,8 @@ public class Manager : MonoBehaviour
 
     private void timerEnd()
     {
-        throw new System.NotImplementedException();
+        playing = false;
+        Debug.Log("Winner");
     }
 
     private void ChangeRandomMulti()
@@ -122,7 +139,6 @@ public class Manager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (playing) water.riseCalc(BrokenCount);
         if (playing) water.riseCalc(BrokenCount);
         
     }
