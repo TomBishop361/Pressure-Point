@@ -11,7 +11,7 @@ using UnityEngine.SceneManagement;
 public class Manager : MonoBehaviour
 {
     public static Manager Instance { get; private set; }
-    
+    [SerializeField] AudioSource pump;
     [Header("Object References")]
     [SerializeField] WaterRise water;
     [SerializeField] TextMeshPro DepthCounter;
@@ -144,7 +144,12 @@ public class Manager : MonoBehaviour
     void Update()
     {
         if (playing) water.riseCalc(BrokenCount);
-        
+        if(!pump.isPlaying && electricOn)
+        {
+            pump.Play();
+        }else if (pump.isPlaying && !electricOn) {
+            pump.Stop();
+        }
     }
 
    

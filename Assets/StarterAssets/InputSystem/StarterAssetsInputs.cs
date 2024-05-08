@@ -120,7 +120,10 @@ namespace StarterAssets
 
 							}
 						}
-						else { isRepairing = false; }
+						else {
+							BlowTourchFire = false;
+							isRepairing = false;
+						}
 
 					}
 				}

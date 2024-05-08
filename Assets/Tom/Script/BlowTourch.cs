@@ -7,15 +7,23 @@ public class BlowTourch : MonoBehaviour
 {
     [SerializeField] StarterAssetsInputs input;
     [SerializeField] ParticleSystem flame;
+    AudioSource audio;
+
+    private void Start()
+    {
+        audio = GetComponent<AudioSource>();
+    }
 
     private void Update()
     {
-        if(input.isRepairing && !flame.isPlaying)
+        if (input.BlowTourchFire && !flame.isPlaying)
         {
             flame.Play();
-        }else if (!input.isRepairing)
+            audio.Play();
+        }else if (!input.BlowTourchFire)
         {
             flame.Stop();
+            audio.Stop();
         }
     }
 }
