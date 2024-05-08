@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.UI;
 
 public class SliderVolumeChange : MonoBehaviour
 {
-    [SerializeField] private Slider volumeSlider;
+    public AudioMixer masterMix;
+
 
     void Start()
     {
@@ -21,20 +23,20 @@ public class SliderVolumeChange : MonoBehaviour
         }
     }
 
-    public void ChangeVolume()
+    public void OnValueChange(Slider slider)
     {
-        AudioListener.volume = volumeSlider.value;
-        save();
+        masterMix.SetFloat("MasterVol", slider.value);
+        save(slider);
 
     }
 
     private void Load()
     {
-        volumeSlider.value = PlayerPrefs.GetFloat("MasterVolume");
+        GetComponent<Slider>().value = PlayerPrefs.GetFloat("MasterVolume");
     }
 
-    private void save()
+    private void save(Slider slider)
     {
-        PlayerPrefs.SetFloat("MasterVolume", volumeSlider.value);
+        PlayerPrefs.SetFloat("MasterVolume", slider.value);
     }
 }

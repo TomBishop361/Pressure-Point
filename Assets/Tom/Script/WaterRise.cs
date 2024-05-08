@@ -24,7 +24,7 @@ public class WaterRise : MonoBehaviour
         }
         else
         {
-            if (waterLevel > 7.442f)
+            if (waterLevel > 7.484f)
             {
                 Speed = -0.01f;
             }
@@ -36,7 +36,7 @@ public class WaterRise : MonoBehaviour
     {
         transform.position += Vector3.up * Speed * Time.deltaTime;
         waterLevel = transform.position.y;
-        if(waterLevel < 10.218f)
+        if(waterLevel > 10.259f)
         {
             Manager.Instance.Death(1);
         }
