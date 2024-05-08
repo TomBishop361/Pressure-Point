@@ -39,8 +39,9 @@ namespace StarterAssets
 		bool isHeldObject;
 		public bool isRepairing;
 		float interacting;
+		[HideInInspector]public bool BlowTourchFire = false;
 
-		public void OnMove(InputValue value){ 
+        public void OnMove(InputValue value){ 
 			move = value.Get<Vector2>();
 		}
 
@@ -56,6 +57,10 @@ namespace StarterAssets
 			{
 				if (interacting == 1)//if mouse down
 				{
+					if(HeldObject != null && HeldObject.name == "BlowTorch")
+					{
+						BlowTourchFire = true;
+					}
 					RaycastHit hit;
 
 					Vector3 p1 = Camera.main.transform.position;
@@ -115,11 +120,17 @@ namespace StarterAssets
 
 							}
 						}
+						else { isRepairing = false; }
 
 					}
 				}
-				
+
 			}
+			else
+			{
+				BlowTourchFire = false;
+                isRepairing = false;
+            }
             if (playerState == 1)
             {
 				if (interacting == 1)
