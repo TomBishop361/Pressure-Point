@@ -17,7 +17,7 @@ public class Manager : MonoBehaviour
     [SerializeField] TutorialAudioMang tutorial;
     [Header("Misc")]
     public int BrokenCount;
-    int randomMulti = 5;
+    int randomMulti = 6;
     int depth;
     int timeRemaining = 300;
     [SerializeField]GameObject deathScreen;
@@ -103,7 +103,7 @@ public class Manager : MonoBehaviour
 
     private void randomEvents()
     {        
-        int random = genRandom(2);
+        int random = genRandom(randomMulti);
         Debug.Log("randomEvent" + random);
         if(random == 1)
         {

@@ -64,7 +64,7 @@ public class Screw : MonoBehaviour
     //lerps screw to mimic screwing 
     IEnumerator ScrewLerp()
     {
-        float targetpos = transform.position.x - 0.001f;
+        float targetpos = transform.position.x - 0.1f;
         FBox.screwCount(-1);
         isUnscrewed = false; // is screwed
         lerping = true;

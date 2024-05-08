@@ -108,13 +108,12 @@ public class FuseBox : MonoBehaviour
 
     private void resetFbox()
     {
+        hinge.transform.localEulerAngles = new Vector3(-90, 0, 180);
         hinge.BroadcastMessage("resetFbox", SendMessageOptions.DontRequireReceiver);
         sound.Stop();
         sCount = 0;
         switchCount = 0;
-        if (doorISOpen)
-        {
-            StartCoroutine("CloseLerp");
-        }
+        doorISOpen = false;
+        
     }
 }

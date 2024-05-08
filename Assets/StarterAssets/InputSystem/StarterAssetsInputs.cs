@@ -118,13 +118,17 @@ namespace StarterAssets
 
 					}
 				}
-				if (playerState == 1)
+				
+			}
+            if (playerState == 1)
+            {
+				if (interacting == 1)
 				{
 					playerState = 0;
 					return;
-
 				}
-			}
+
+            }
         }
 
 		//Drops held item
