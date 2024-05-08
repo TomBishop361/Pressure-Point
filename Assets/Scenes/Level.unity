@@ -1537,8 +1537,8 @@ MonoBehaviour:
   - {fileID: 751022644}
   - {fileID: 1441792133}
   - {fileID: 363021914}
-  minTime: 0
-  Maxtime: 0
+  minTime: 30
+  Maxtime: 45
 --- !u!1001 &254899325
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2458,7 +2458,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 2.5
-  MaxDistance: 3.8
+  MaxDistance: 6.53
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -3675,8 +3675,8 @@ MonoBehaviour:
   - {fileID: 1536138373}
   - {fileID: 770189289}
   - {fileID: 869362212}
-  minTime: 30
-  Maxtime: 45
+  minTime: 60
+  Maxtime: 120
 --- !u!1 &538836039
 GameObject:
   m_ObjectHideFlags: 0
@@ -13552,7 +13552,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
+  MinDistance: 4.95
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
@@ -13588,7 +13588,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -13649,7 +13649,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
+  MinDistance: 4.95
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
@@ -13685,7 +13685,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -14407,7 +14407,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 2.5
-  MaxDistance: 3.8
+  MaxDistance: 10.25
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -16311,7 +16311,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
+  MinDistance: 6.54
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
@@ -16579,7 +16579,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 2.5
-  MaxDistance: 3.8
+  MaxDistance: 10.2
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -24493,7 +24493,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 2.5
-  MaxDistance: 3.8
+  MaxDistance: 8.74
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -38748,6 +38748,7 @@ MonoBehaviour:
   tutorial: {fileID: 1709757129}
   BrokenCount: 0
   deathScreen: {fileID: 1374108086}
+  electricOn: 1
   components:
   - {fileID: 1903436616}
   - {fileID: 1554294285}
@@ -38873,7 +38874,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 12.86
-  MaxDistance: 13.07
+  MaxDistance: 12.9886
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0

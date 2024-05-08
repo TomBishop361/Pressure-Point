@@ -40,7 +40,7 @@ public class FuseBox : MonoBehaviour
 
     public void Fix()
     {
-        
+        Manager.Instance.electricOn = true;
         alertLight.GetComponent<Renderer>().material = mats[1]; // green material (Fixed)
         Manager.Instance.fix(GetComponent<FuseBox>());
     }
@@ -84,6 +84,7 @@ public class FuseBox : MonoBehaviour
     public void Break()
     {
         isBroken = true;
+        Manager.Instance.electricOn = false;
         alertLight.GetComponent<Renderer>().material = mats[0];
         BroadcastMessage("breakSwitch",null, SendMessageOptions.DontRequireReceiver);//Calls event in all switches to go to broken state
         sound.Play();

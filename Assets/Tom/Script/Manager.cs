@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
 
 public class Manager : MonoBehaviour
 {
@@ -17,13 +18,14 @@ public class Manager : MonoBehaviour
     [SerializeField] TutorialAudioMang tutorial;
     [Header("Misc")]
     public int BrokenCount;
-    int randomMulti = 6;
+    int randomMulti = 9;
     int depth;
     int timeRemaining = 300;
     [SerializeField]GameObject deathScreen;
-    bool playing = false;
+    [HideInInspector]bool playing = false;
+    [HideInInspector] public bool electricOn = true;
+    [SerializeField] MissionCompleteSounds missioncomplete;
 
-   
     [SerializeField]Component[] components;
     public Dictionary<Component, bool> Breakables =
         new Dictionary<Component, bool>();
@@ -91,7 +93,9 @@ public class Manager : MonoBehaviour
     private void timerEnd()
     {
         playing = false;
-        Debug.Log("Winner");
+        BrokenCount = 0;
+        missioncomplete.missionComplete();
+
     }
 
     private void ChangeRandomMulti()
@@ -148,7 +152,7 @@ public class Manager : MonoBehaviour
     public void Death(int DeathType)
     {
         deathScreen.SetActive(true);
-        
+        StartCoroutine("DeathDelay");
     }
 
     public void fix(Component comp)
@@ -163,6 +167,14 @@ public class Manager : MonoBehaviour
         yield return new WaitForSeconds(6f);
         Breakables[comp] = false;
         Debug.Log("Cool'd down",comp);
+        
+    }
+
+
+    private IEnumerator DeathDelay()
+    {
+        yield return new WaitForSeconds(6f);
+        SceneManager.LoadScene(0);
         
     }
 

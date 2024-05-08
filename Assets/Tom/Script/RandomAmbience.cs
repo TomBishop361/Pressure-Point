@@ -22,6 +22,7 @@ public class RandomAmbience : MonoBehaviour
     {
         int random = Random.Range(0, sources.Length-1);
         sources[random].Play();
+        randomtime = Random.Range(minTime, Maxtime);
     }
 
 }
