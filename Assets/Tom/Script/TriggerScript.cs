@@ -10,7 +10,7 @@ public class TriggerScript : MonoBehaviour
 
     private void OnTriggerEnter(Collider col)
     {
-        Debug.Log("Trigger");
+        
         triggerEvent.Invoke();
 
     }

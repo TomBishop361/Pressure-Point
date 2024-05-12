@@ -38,6 +38,7 @@ public class FuseBox : MonoBehaviour
         }
     }
 
+    //Fix component
     public void Fix()
     {
         Manager.Instance.electricOn = true;
@@ -106,7 +107,7 @@ public class FuseBox : MonoBehaviour
         
 
     }
-
+    //Resets Fusebox when tutorial skipped
     private void resetFbox()
     {
         hinge.transform.localEulerAngles = new Vector3(-90, 0, 180);

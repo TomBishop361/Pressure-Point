@@ -8,6 +8,7 @@ using System.Runtime.CompilerServices;
 
 public class MainMenuButtonScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
+    //Supported by Tom
     [SerializeField] Camera _camera;
     [SerializeField] GameObject pointer;
     int i;
@@ -20,18 +21,19 @@ public class MainMenuButtonScript : MonoBehaviour, IPointerEnterHandler, IPointe
 
     private void Start()
     {
-        lerpVec = _camera.gameObject.transform.position;
+        Cursor.lockState = CursorLockMode.None;
+        if(_camera != null ) lerpVec = _camera.gameObject.transform.position;
     }
 
     public void playGame()
     {
-        Debug.Log("adawdawd");
+        
         StartCoroutine("CameraLerp");
     }
 
     IEnumerator CameraLerp()
     {
-        Debug.Log("Coroutine");
+        
         float time = 0;
         while (time < 1f)
         {
@@ -47,6 +49,7 @@ public class MainMenuButtonScript : MonoBehaviour, IPointerEnterHandler, IPointe
         _camera.gameObject.SetActive(false);
         overlay.SetActive(true);  
         mainmenuCanvas.SetActive(false);
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
 
@@ -77,12 +80,17 @@ public class MainMenuButtonScript : MonoBehaviour, IPointerEnterHandler, IPointe
         }
     }
 
+    public void quitGame()
+    {
+        Application.Quit();
+    }
+
     void Update()
     {
         
         if (_camera != null)
         {
-            Debug.Log("Update");
+            
             _camera.gameObject.transform.position = lerpVec;
         }
     }

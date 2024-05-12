@@ -69,11 +69,11 @@ namespace StarterAssets
 					// to see if it is about to hit anything.
 					if (Physics.SphereCast(p1, 0.08f, Camera.main.transform.forward, out hit, 2.0f))
 					{
-						Debug.Log("hit");
+						
 						//Comparing hit object tag to check what action to perform					
 						if (hit.transform.CompareTag("PC"))
 						{
-							Debug.Log("PC Hit");
+							
 							hit.transform.GetComponent<BoxCollider>().enabled = false;
 							InteractedObj = hit.transform.gameObject;
 							playerState = 2; //PC State
@@ -84,7 +84,7 @@ namespace StarterAssets
 						}
 						if (hit.transform.CompareTag("Valve"))
 						{
-							Debug.Log("Valve HIT");
+							
 							InteractedObj = hit.transform.gameObject;
 							playerState = 1;//valve state
 							StartCoroutine(LerpToInteract());
@@ -129,11 +129,11 @@ namespace StarterAssets
 				}
 
 			}
-			else
+			if(interacting == 0)
 			{
 				BlowTourchFire = false;
-                isRepairing = false;
-            }
+			}
+			
             if (playerState == 1)
             {
 				if (interacting == 1)
@@ -162,6 +162,7 @@ namespace StarterAssets
 					HeldObject.transform.localEulerAngles = new Vector3(0, 0, 0);
 				}
 				isHeldObject = false;
+				HeldObject = null;
 			}
 		}
 
@@ -225,6 +226,7 @@ namespace StarterAssets
 
 		private void Update()
 		{
+			
 			//calculates roation of interacted object
 			if (InteractedObj != null)
 			{

@@ -44,11 +44,11 @@ public class Manager : MonoBehaviour
             Instance = this;
         }
 
-
+        //puts list components into dictionary
         foreach(Component comp in components)
         {
             Breakables.Add(comp, false);
-            Debug.Log(comp.ToString());
+           
         }   
         
     }
@@ -56,9 +56,11 @@ public class Manager : MonoBehaviour
     // Start is called before the first frame update
     public void GameStart()
     {
-        
+        //stops tutorial 
         tutorial.audioSource.Stop();
         tutorial.gameObject.SetActive(false);
+
+        //fixes everything broken in tutorial
         for (int i = 0; i < Breakables.Count; i++)
         {            
             Component key = Breakables.ElementAt(i).Key;
@@ -69,20 +71,22 @@ public class Manager : MonoBehaviour
             }
         }
         BrokenCount = 0;
+        //Starts main game logic
         StartCoroutine("timerUpdate");
         playing = true;
 
 
     }
 
+    //timer counting down from 300 seconds
     private IEnumerator timerUpdate()
     {
         while (timeRemaining > -1)
         {
             
             depth = (300 - timeRemaining) * 20;
-            if (timeRemaining % 60 == 0) ChangeRandomMulti();
-            if(timeRemaining % 3 ==0) randomEvents();
+            if (timeRemaining % 60 == 0) ChangeRandomMulti(); // every minute change random multiplier
+            if(timeRemaining % 3 ==0) randomEvents(); //every 3 seconds call randomevent
             timeRemaining--;
             DepthCounter.text= depth.ToString();
             yield return new WaitForSeconds(1f);
@@ -90,8 +94,9 @@ public class Manager : MonoBehaviour
         timerEnd();
     }
 
-    private void timerEnd()
+    private void timerEnd() //When timer reaches 0 / 5 mins has passed
     {
+        //start end game logic
         playing = false;
         BrokenCount = 0;
         missioncomplete.missionComplete();
@@ -107,6 +112,7 @@ public class Manager : MonoBehaviour
 
     private void randomEvents()
     {        
+        //Rolls to see if a system should break
         int random = genRandom(randomMulti);
         Debug.Log("randomEvent" + random);
         if(random == 1)
@@ -122,19 +128,21 @@ public class Manager : MonoBehaviour
 
     void selectBreak()
     {
+        //if everything is broken return
         if (Breakables.Values.All<bool>(value => value))
         {
             Debug.Log("all are broken");
             return;
         }
         int random = genRandom(components.Length);
+        //Check if component is broken
         if (Breakables.ElementAt(random).Value == false)
         {
             Breakables.ElementAt(random).Key.gameObject.SendMessage("Break", SendMessageOptions.DontRequireReceiver);
             BrokenCount++;
             Breakables[Breakables.ElementAt(random).Key] = true;
         }
-        else
+        else //pick something else to break;
         {
             selectBreak();
         }
@@ -171,7 +179,7 @@ public class Manager : MonoBehaviour
     {
         yield return new WaitForSeconds(6f);
         Breakables[comp] = false;
-        Debug.Log("Cool'd down",comp);
+        
         
     }
 

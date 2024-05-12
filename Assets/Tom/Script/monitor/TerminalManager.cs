@@ -136,7 +136,7 @@ public class TerminalManager : MonoBehaviour
             case "/log4":
                 Instantiate(ConvictLog, content.transform, false);
                 break;
-            case "/quitgame":
+            case "/quit":
                 Application.Quit();
                 break;
         }

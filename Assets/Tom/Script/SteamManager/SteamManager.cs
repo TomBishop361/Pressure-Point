@@ -8,7 +8,7 @@ public class SteamManager : MonoBehaviour
     {
         try
         {
-            Steamworks.SteamClient.Init(1446560);
+            Steamworks.SteamClient.Init(2971700);
         }
         catch  (System.Exception e) { 
             Debug.Log("Couldn't initialize steam client");

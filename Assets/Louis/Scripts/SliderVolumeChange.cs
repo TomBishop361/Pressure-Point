@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class SliderVolumeChange : MonoBehaviour
 {
+    [SerializeField] GameObject options; 
     public AudioMixer masterMix;
 
 
@@ -21,6 +22,7 @@ public class SliderVolumeChange : MonoBehaviour
         {
             Load();
         }
+        options.SetActive(false);
     }
 
     public void OnValueChange(Slider slider)

@@ -10,6 +10,7 @@ public class WaterRise : MonoBehaviour
 
     public void riseCalc(int brokenCount)
     {
+        //Water will rise quicker is Fbox is broken
         if (brokenCount > 0)
         {
             if (Manager.Instance.electricOn == true)
